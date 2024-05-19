@@ -1,0 +1,111 @@
+
+  .container {
+    width: 100%;
+    min-height: 100vh;
+    background: rgba(49, 242, 255, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    
+  }
+  
+  .title {
+    color: rgba(20, 0, 255, 1);
+    font-weight: bold;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    margin-top: 13rem;
+  }
+  
+  .input-container {
+    width: 90%;
+    max-width: 700px;
+    background: rgba(255, 255, 255, 1);
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 40px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  
+  .label {
+    color: rgba(128, 128, 128, 1);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .input-field {
+    width: calc(100% - 2rem);
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 20px;
+  }
+  
+  .input-field:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 255, 0.5);
+  }
+  
+  .button-container {
+    width: 80%;
+    max-width: 300px;
+    margin: 2rem 0;
+  }
+  
+  .button-text {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(20, 0, 255, 1);
+    color: rgba(255, 255, 255, 1);
+    font-size: 2rem;
+    border: none;
+    border-radius: 48px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;  /* Remove sublinhado */
+    transition: background 0.3s ease, transform 0.3s ease;  /* Suaviza a transição do hover */
+  }
+  
+  .button-text:hover {
+    background: rgba(20, 0, 200, 1);
+    transform: scale(1.05);  /* Aumenta ligeiramente o tamanho do botão no hover */
+  }
+  
+  @media (min-width: 768px) {
+    .title {
+      font-size: 4rem;
+    }
+  
+    .label {
+      font-size: 2rem;
+    }
+  
+    .input-field {
+      font-size: 1.5rem;
+    }
+  
+    .button-text {
+      font-size: 2.5rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .title {
+      font-size: 5rem;
+    }
+  
+    .label {
+      font-size: 2.5rem;
+    }
+  
+    .input-field {
+      font-size: 1.8rem;
+    }
+  
+    .button-text {
+      font-size: 3rem;
+    }
+  }

@@ -1,0 +1,43 @@
+body {
+    background-color: #32F3FF;
+  }
+  
+  .login-container {
+    text-align: center;
+    margin-top: 100px;
+  }
+  .input-container2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .logo {
+    width: 50%;
+  }
+  .custom-input {
+    width: 40%; 
+    height: 40px;
+    font-size: 20px;
+}
+.login-container2 {
+  text-align: center;
+  
+}
+.escrita{
+  font-size: 20px;
+  display: inline-block;
+margin-right: 40px;
+border-bottom: 2px solid #000;
+}
+.button {
+  background-color: #361ed5; /* Green */
+  border: none;
+  color: white;
+  padding: 20px 100px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+}
