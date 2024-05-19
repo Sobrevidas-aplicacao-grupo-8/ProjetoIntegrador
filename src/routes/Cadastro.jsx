@@ -1,7 +1,8 @@
 import React from "react";
 import "./Style/Cadastro.css";
-
+import { useNavigate } from "react-router-dom";
 const Cadastro = () => {
+  const navigate = useNavigate();
   return (
     <div className="container">
       <span className="title">Cadastro</span>
@@ -47,13 +48,8 @@ const Cadastro = () => {
       </div>
 
       <div className="button-container">
-        <button className="button-text">
-          <a
-            href="login.html"
-            style={{ textDecoration: "none", color: "white" }}
-          >
-            concluir
-          </a>
+        <button className="button-text" onClick={() => navigate("/")}>
+          concluir
         </button>
       </div>
     </div>
