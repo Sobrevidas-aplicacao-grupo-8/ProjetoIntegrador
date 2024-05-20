@@ -4,6 +4,7 @@ import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./routes/Login.jsx";
 import Cadastro from "./routes/Cadastro.jsx";
+import Paciente from "./routes/paciente.jsx";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: "/cadastro",
         element: <Cadastro />,
+      },
+      {
+        path: "/paciente",
+        element: <Paciente />,
       },
     ],
   },
