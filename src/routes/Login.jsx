@@ -25,7 +25,9 @@ const Login = () => {
       </div>
       <div className="login-container2">
         <p className="escrita">esqueci a senha</p>
-        <p className="escrita">criar login</p>
+        <p className="escrita" onClick={() => navigate("/cadastro")}>
+          criar login
+        </p>
       </div>
     </>
   );
