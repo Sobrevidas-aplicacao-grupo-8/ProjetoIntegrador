@@ -19,7 +19,7 @@ const Login = () => {
         ></input>
       </div>
       <div className="login-container2">
-        <button className="button" onClick={() => navigate("/cadastro")}>
+        <button className="button" onClick={() => navigate("/paciente")}>
           Entrar
         </button>
       </div>

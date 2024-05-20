@@ -350,10 +350,8 @@
   .v25_39 {
     width: 200px;
   height: 65px;
-  background: rgba(255,255,255,1);
   opacity: 1;
   position: absolute;
-  border: 1px solid rgba(0,0,0,1);
   display: flex;
   align-items: center;
   padding: 0 10px;
@@ -375,10 +373,8 @@
   .v25_41 {
     width: 180px;
   height: 65px;
-  background: rgba(255,255,255,1);
   opacity: 1;
   position: absolute;
-  border: 1px solid rgba(0,0,0,1);
   display: flex;
   align-items: center;
   padding: 0 10px;
@@ -638,9 +634,7 @@
     border: 1px solid rgba(0,0,0,1);
     overflow: hidden;
   }
-  .v25_63:focus{
-    background: rgb(65, 65, 240);
-  }
+  
   .box-content{
 
     width: 100%;
@@ -676,9 +670,7 @@
     overflow: hidden;
     outline: none;
   }
-  .v25_64:focus{
-    background: rgb(65, 65, 240);
-  }
+  
   .v25_68 {
     width: 77px;
     color: rgba(0,0,0,1);

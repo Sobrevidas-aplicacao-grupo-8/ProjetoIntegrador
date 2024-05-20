@@ -1,7 +1,24 @@
 import React from "react";
 import "./Style/paciente.css";
+import { useState } from "react";
 
 const Paciente = () => {
+  const [isSelected, setIsSelected] = useState(false);
+  const [isSelected2, setIsSelected2] = useState(false);
+  const [isSelected3, setIsSelected3] = useState(false);
+  const [isSelected4, setIsSelected4] = useState(false);
+  const toggleSelected = () => {
+    setIsSelected(!isSelected);
+  };
+  const toggleSelected2 = () => {
+    setIsSelected2(!isSelected2);
+  };
+  const toggleSelected3 = () => {
+    setIsSelected3(!isSelected3);
+  };
+  const toggleSelected4 = () => {
+    setIsSelected4(!isSelected4);
+  };
   return (
     <div className="v18_2">
       <div className="v18_3"></div>
@@ -102,23 +119,35 @@ const Paciente = () => {
         />
       </div>
       <span className="v25_61">Fator de risco *</span>
-      <div className="v25_62" tabIndex="0">
+      <div className="v25_62" tabIndex="0" onClick={toggleSelected}>
         <input type="checkbox" />
-        <div className="box-content"></div>
+        <div
+          className="box-content"
+          style={{ backgroundColor: isSelected ? "lightblue" : "transparent" }}
+        ></div>
       </div>
       <span className="v25_70">Homem &gt; 40 anos</span>
-      <div className="v25_63" tabIndex="0">
+      <div className="v25_63" tabIndex="0" onClick={toggleSelected2}>
         <input type="checkbox" />
-        <div className="box-content"></div>
+        <div
+          className="box-content"
+          style={{ backgroundColor: isSelected2 ? "lightblue" : "transparent" }}
+        ></div>
       </div>
-      <div className="v25_64" tabIndex="0">
+      <div className="v25_64" tabIndex="0" onClick={toggleSelected3}>
         <input type="checkbox" />
-        <div className="box-content"></div>
+        <div
+          className="box-content"
+          style={{ backgroundColor: isSelected3 ? "lightblue" : "transparent" }}
+        ></div>
       </div>
       <span className="v25_68">Etilista</span>
-      <div className="v25_65" tabIndex="0">
+      <div className="v25_65" tabIndex="0" onClick={toggleSelected4}>
         <input type="checkbox" />
-        <div className="box-content"></div>
+        <div
+          className="box-content"
+          style={{ backgroundColor: isSelected4 ? "lightblue" : "transparent" }}
+        ></div>
       </div>
       <span className="v25_69">Lesão suspeita</span>
       <span className="v25_67">Tabagista</span>
