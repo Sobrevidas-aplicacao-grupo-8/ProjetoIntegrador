@@ -6,5 +6,4 @@ boxes.forEach(box => {
     box.addEventListener('click', () => {
         // Alterna a classe "selected" da div clicada
         box.classList.toggle('selected');
-    });
-});
+    
