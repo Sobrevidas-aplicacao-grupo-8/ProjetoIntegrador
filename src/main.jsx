@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./routes/Login.jsx";
 import Cadastro from "./routes/Cadastro.jsx";
 import Paciente from "./routes/paciente.jsx";
+import Aoclicaremumpontonomapa from "./routes/aoclicaremumpontonomapa.jsx";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
         path: "/paciente",
         element: <Paciente />,
       },
+      {
+        path: "/aoclicar",
+        element: <Aoclicaremumpontonomapa/>
+      }
     ],
   },
 ]);
