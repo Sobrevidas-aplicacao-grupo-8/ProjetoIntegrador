@@ -1,7 +1,7 @@
 import React from "react";
 import "./Style/aoclicaremumponto.css";
 import { useNavigate } from "react-router-dom";
-const Cadastro = () => {
+const aoclicaremumpontonomapa = () => {
   const navigate = useNavigate();
   return (
     <div class="v164_28">
