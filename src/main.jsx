@@ -7,6 +7,7 @@ import Cadastro from "./routes/Cadastro.jsx";
 import Paciente from "./routes/paciente.jsx";
 import Aoclicaremumpontonomapa from "./routes/aoclicaremumpontonomapa.jsx";
 import Pacienteencaminhado from "./routes/pacienteencaminhado.jsx";
+import PacientesCadastrados from "./routes/PacientesCadastrados.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,12 +28,16 @@ const router = createBrowserRouter([
       },
       {
         path: "/aoclicar",
-        element: <Aoclicaremumpontonomapa/>
+        element: <Aoclicaremumpontonomapa />,
       },
       {
         path: "/pacienteencaminhado",
-        element: <Pacienteencaminhado/>
-      }
+        element: <Pacienteencaminhado />,
+      },
+      {
+        path: "/pacientescadastrados",
+        element: <PacientesCadastrados />,
+      },
     ],
   },
 ]);
