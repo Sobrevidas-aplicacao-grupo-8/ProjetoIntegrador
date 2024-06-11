@@ -1,8 +1,10 @@
 import React from "react";
 import "./Style/paciente.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Paciente = () => {
+  const navigate = useNavigate();
   const [isSelected, setIsSelected] = useState(false);
   const [isSelected2, setIsSelected2] = useState(false);
   const [isSelected3, setIsSelected3] = useState(false);
@@ -29,7 +31,9 @@ const Paciente = () => {
       </span>
       <span className="v18_7">HOME</span>
       <span className="v18_29">MONITORAMENTO</span>
-      <span className="v18_30">Pacientes encaminhados</span>
+      <span className="v18_30" onClick={() => navigate("/pacienteencaminhado")}>
+        Pacientes encaminhados
+      </span>
       <span className="v18_31">Pacientes absenteístas</span>
       <span className="v18_32">SOBREVIDAS ACS</span>
       <div className="v18_33"></div>
@@ -155,7 +159,12 @@ const Paciente = () => {
       <div className="v83_12">
         <input type="date" className="input-text" placeholder="__/__/____" />
       </div>
-      <span className="v87_62">Pacientes cadastrados</span>
+      <span
+        className="v87_62"
+        onClick={() => navigate("/pacientescadastrados")}
+      >
+        Pacientes cadastrados
+      </span>
       <div className="v99_2"></div>
       <div className="v99_3"></div>
       <div className="v99_4"></div>
