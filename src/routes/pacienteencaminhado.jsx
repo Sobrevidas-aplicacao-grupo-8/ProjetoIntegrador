@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
 import "./Style/pacienteencaminhado.css";
-import PacienteEncaminhado from "../components/PacienteEncaminhado";
+import Pacientes from "../components/Pacientes";
 import React, { useState, useEffect } from "react";
 
 const PacientesEncaminhados = () => {
@@ -42,7 +42,7 @@ const PacientesEncaminhados = () => {
       </div>
 
       {pacientesFiltrados.map((paciente, index) => (
-        <PacienteEncaminhado
+        <Pacientes
           key={index}
           nome={paciente.nome}
           dataCadastro={new Date(paciente.data_cadastro).toLocaleDateString()}

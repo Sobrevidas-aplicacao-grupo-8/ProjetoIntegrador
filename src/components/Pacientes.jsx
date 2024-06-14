@@ -1,6 +1,6 @@
 import React from "react";
 
-const PacienteEncaminhado = ({nome}) => {
+const Pacientes = ({ nome }) => {
   return (
     <div className="tabela">
       <div style={{ width: 200 }}>
@@ -10,4 +10,4 @@ const PacienteEncaminhado = ({nome}) => {
   );
 };
 
-export default PacienteEncaminhado;
+export default Pacientes;
