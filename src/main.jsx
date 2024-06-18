@@ -8,6 +8,7 @@ import Paciente from "./routes/paciente.jsx";
 import Aoclicaremumpontonomapa from "./routes/aoclicaremumpontonomapa.jsx";
 import Pacientesencaminhados from "./routes/pacienteencaminhado.jsx";
 import PacientesCadastrados from "./routes/PacientesCadastrados.jsx";
+import PacientesAbsenteistas from "./routes/PacientesAbsenteistas.jsx";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/pacientescadastrados",
         element: <PacientesCadastrados />,
+      },
+      {
+        path: "/pacientesabsenteistas",
+        element: <PacientesAbsenteistas />,
       },
     ],
   },

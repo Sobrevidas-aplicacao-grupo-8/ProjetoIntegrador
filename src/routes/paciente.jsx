@@ -34,7 +34,12 @@ const Paciente = () => {
       <span className="v18_30" onClick={() => navigate("/pacienteencaminhado")}>
         Pacientes encaminhados
       </span>
-      <span className="v18_31">Pacientes absenteístas</span>
+      <span
+        className="v18_31"
+        onClick={() => navigate("/pacientesabsenteistas")}
+      >
+        Pacientes absenteístas
+      </span>
       <span className="v18_32">SOBREVIDAS ACS</span>
       <div className="v18_33"></div>
       <span className="v18_37">PROFISSIONAL DE SAÚDE</span>
