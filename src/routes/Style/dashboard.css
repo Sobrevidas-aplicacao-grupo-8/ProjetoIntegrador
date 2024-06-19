@@ -1,0 +1,182 @@
+body{
+    overflow-x: hidden;
+}
+.maincountainer {
+    display: flex;
+    flex-direction: row;
+    
+    overflow-y: hidden;
+  }
+  
+  /* Barra lateral */
+  .barra-lateral {
+    background-color: rgb(227, 255, 255);
+    padding: 10px;
+    width: 24%;
+    min-width: 200px;
+    height: 80vh;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+  
+  .versao {
+    text-transform: uppercase;
+    background-color: rgb(73, 207, 207);
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .home {
+    text-transform: uppercase;
+    font-weight: bolder;
+    margin-bottom: 10px;
+  }
+  
+  .dashboard {
+    font-size: 25px;
+    background-color: rgb(73, 207, 207);
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .cadastro {
+    text-transform: uppercase;
+    font-weight: bolder;
+    margin-bottom: 10px;
+  }
+  
+  .paciente a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    font-size: 25px;
+    padding: 25px;
+    margin-bottom: 10px;
+  }
+  
+  .paciente a:hover {
+    color: #112483;
+  }
+  
+  .monitorar h2 {
+    text-transform: uppercase;
+    font-weight: bolder;
+    margin-bottom: 10px;
+  }
+  
+  .monitorar ul {
+    font-size: 25px;
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .monitorar li a {
+    display: block;
+    text-decoration: none;
+    color: black;
+    padding: 20px 0;
+    margin-bottom: 10px;
+  }
+  
+  .monitorar li a:hover {
+    color: #112483;
+  }
+  
+  /* Estilo principal do conteúdo */
+  .principal {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    position: relative;
+    height: 90vh;
+  }
+  
+  .form :placeholder-shown {
+    font-size: 20px;
+    color: aqua;
+  }
+  
+  .form {
+    margin-bottom: 2rem;
+  }
+  
+  .paciente-cadastrado,
+  .paciente-encaminhado,
+  .paciente-absenteista,
+  .qntd-cadastrado,
+  .qntd-encaminhado,
+  .qntd-absenteista {
+    margin-bottom: 2rem;
+  }
+  
+  .paciente-cadastrado,
+  .paciente-encaminhado,
+  .paciente-absenteista {
+    font-size: 25px;
+    text-align: center;
+  }
+  
+  .qntd-cadastrado,
+  .qntd-encaminhado,
+  .qntd-absenteista {
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
+    background-color: #00e1ff;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .mapa {
+    margin-bottom: 2rem;
+  }
+  
+  .mapa h2 {
+    text-transform: uppercase;
+    font-size: 25px;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .logo2 {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .fator-risco {
+    width: 100%;
+  }
+  
+  .fator-risco h2 {
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 2rem;
+  }
+  
+  .fator-risco div {
+    margin-bottom: 2rem;
+  }
+  
+  .fator-risco h4 {
+    font-size: 20px;
+  }
+  
+  .fator-risco p {
+    font-size: 20px;
+    background-color: #00e1ff;
+    width: 100%;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }

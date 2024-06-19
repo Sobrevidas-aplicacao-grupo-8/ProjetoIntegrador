@@ -9,6 +9,7 @@ import Aoclicaremumpontonomapa from "./routes/aoclicaremumpontonomapa.jsx";
 import Pacientesencaminhados from "./routes/pacienteencaminhado.jsx";
 import PacientesCadastrados from "./routes/PacientesCadastrados.jsx";
 import PacientesAbsenteistas from "./routes/PacientesAbsenteistas.jsx";
+import Dashboard from "./routes/Dashboard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "/pacientesabsenteistas",
         element: <PacientesAbsenteistas />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
       },
     ],
   },
