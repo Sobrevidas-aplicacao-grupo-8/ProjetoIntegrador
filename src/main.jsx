@@ -9,11 +9,7 @@ import Aoclicaremumpontonomapa from "./routes/aoclicaremumpontonomapa.jsx";
 import Pacientesencaminhados from "./routes/pacienteencaminhado.jsx";
 import PacientesCadastrados from "./routes/PacientesCadastrados.jsx";
 import PacientesAbsenteistas from "./routes/PacientesAbsenteistas.jsx";
-<<<<<<< HEAD
 import Dashboard from "./routes/Dashboard.jsx";
-=======
-import InformacoesDoPaciente from "./components/Informacoesodpaciete/InformacoesPacientes.jsx";
->>>>>>> marcos
 
 const router = createBrowserRouter([
   {
@@ -48,14 +44,10 @@ const router = createBrowserRouter([
         path: "/pacientesabsenteistas",
         element: <PacientesAbsenteistas />,
       },
-<<<<<<< HEAD
       {
         path: "/dashboard",
         element: <Dashboard />,
       },
-=======
-      { path: "/informacoesdopaciente", element: <InformacoesDoPaciente /> },
->>>>>>> marcos
     ],
   },
 ]);

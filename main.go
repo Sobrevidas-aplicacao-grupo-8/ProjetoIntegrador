@@ -2,10 +2,10 @@ package main
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
-	"text/template"
 
 	_ "github.com/lib/pq"
 )
@@ -19,7 +19,6 @@ const (
 )
 
 var db *sql.DB
-var tpl *template.Template
 
 func init() {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
@@ -37,72 +36,72 @@ func init() {
 	}
 
 	fmt.Println("Conexão com o banco de dados estabelecida com sucesso!")
-
-	// Carrega os templates HTML
-	tpl = template.Must(template.ParseGlob("*.html"))
 }
 
 type Usuario struct {
-	Email    string
-	CPF      string
-	Telefone string
-	Username string
-	Password string
+	Email    string `json:"email"`
+	CPF      string `json:"cpf"`
+	Telefone string `json:"telefone"`
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 type Paciente struct {
-	Nome           string
-	CPF            string
-	DataNascimento string
-	Sexo           string
-	Telefone       string
-	Email          string
-	NomeMae        string
-	CEP            string
-	Estado         string
-	Cidade         string
-	Endereco       string
-	// Campos para checkboxes
-	HomemMaiorQuarenta bool
-	Etilista           bool
-	LesaoSuspeita      bool
-	Tabagista          bool
-	DataCadastro       string
-	Microarea          string
+	Nome               string `json:"nome"`
+	CPF                string `json:"cpf"`
+	DataNascimento     string `json:"data_nascimento"`
+	Sexo               string `json:"sexo"`
+	Telefone           string `json:"telefone"`
+	Email              string `json:"email"`
+	NomeMae            string `json:"nome_mae"`
+	CEP                string `json:"cep"`
+	Estado             string `json:"estado"`
+	Cidade             string `json:"cidade"`
+	Endereco           string `json:"endereco"`
+	HomemMaiorQuarenta bool   `json:"homem_maior_quarenta"`
+	Etilista           bool   `json:"etilista"`
+	LesaoSuspeita      bool   `json:"lesao_suspeita"`
+	Tabagista          bool   `json:"tabagista"`
+	DataCadastro       string `json:"data_cadastro"`
+	Microarea          string `json:"microarea"`
+	Encaminhado        bool   `json:"encaminhado"`
+}
+
+func enableCORS(w http.ResponseWriter) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 }
 
 func CriarUsuario(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w)
 	if r.Method != http.MethodPost {
 		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
 		return
 	}
 
-	err := r.ParseForm()
+	var usuario Usuario
+	err := json.NewDecoder(r.Body).Decode(&usuario)
 	if err != nil {
-		http.Error(w, "Erro ao processar o formulário", http.StatusBadRequest)
+		http.Error(w, "Erro ao processar o JSON", http.StatusBadRequest)
 		return
 	}
-
-	email := r.FormValue("email")
-	password := r.FormValue("password")
-	cpf := r.FormValue("cpf")
-	telefone := r.FormValue("telefone")
-	username := r.FormValue("username")
 
 	sqlStatement := `
 	INSERT INTO usuarios (email, password, cpf, telefone, username)
 	VALUES ($1, $2, $3, $4, $5)`
 
-	_, err = db.Exec(sqlStatement, email, password, cpf, telefone, username)
+	_, err = db.Exec(sqlStatement, usuario.Email, usuario.Password, usuario.CPF, usuario.Telefone, usuario.Username)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Erro ao inserir dados no banco de dados: %v", err), http.StatusInternalServerError)
 		return
 	}
 
-	http.Redirect(w, r, "/listar-usuarios", http.StatusSeeOther)
+	w.WriteHeader(http.StatusCreated)
 }
 
 func ListarUsuarios(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w)
 	rows, err := db.Query("SELECT email, cpf, telefone, username FROM usuarios")
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Erro ao buscar usuários: %v", err), http.StatusInternalServerError)
@@ -126,30 +125,30 @@ func ListarUsuarios(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = tpl.ExecuteTemplate(w, "mostrarusuarios.html", usuarios)
-	if err != nil {
-		http.Error(w, fmt.Sprintf("Erro ao renderizar template: %v", err), http.StatusInternalServerError)
-		return
-	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(usuarios)
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodGet {
-		tpl.ExecuteTemplate(w, "login.html", nil)
+	enableCORS(w)
+	if r.Method != http.MethodPost {
+		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
 		return
 	}
 
-	err := r.ParseForm()
+	var credentials struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
+	}
+
+	err := json.NewDecoder(r.Body).Decode(&credentials)
 	if err != nil {
-		http.Error(w, "Erro ao processar o formulário", http.StatusBadRequest)
+		http.Error(w, "Erro ao processar o JSON", http.StatusBadRequest)
 		return
 	}
-
-	email := r.FormValue("email")
-	password := r.FormValue("password")
 
 	var storedPassword string
-	err = db.QueryRow("SELECT password FROM usuarios WHERE email = $1", email).Scan(&storedPassword)
+	err = db.QueryRow("SELECT password FROM usuarios WHERE email = $1", credentials.Email).Scan(&storedPassword)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			http.Error(w, "Email não encontrado", http.StatusUnauthorized)
@@ -159,50 +158,26 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if password != storedPassword {
+	if credentials.Password != storedPassword {
 		http.Error(w, "Senha incorreta", http.StatusUnauthorized)
 		return
 	}
 
-	http.Redirect(w, r, "/listar-usuarios", http.StatusSeeOther)
+	w.WriteHeader(http.StatusOK)
 }
 
 func CadastrarPacientes(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w)
 	if r.Method != http.MethodPost {
 		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
 		return
 	}
 
-	err := r.ParseForm()
+	var paciente Paciente
+	err := json.NewDecoder(r.Body).Decode(&paciente)
 	if err != nil {
-		http.Error(w, "Erro ao processar o formulário", http.StatusBadRequest)
+		http.Error(w, "Erro ao processar o JSON", http.StatusBadRequest)
 		return
-	}
-
-	// Captura dos valores das checkboxes
-	homemMaiorQuarenta := r.FormValue("homem_maior_quarenta") == "on"
-	etilista := r.FormValue("etilista") == "on"
-	lesaoSuspeita := r.FormValue("lesao_suspeita") == "on"
-	tabagista := r.FormValue("tabagista") == "on"
-
-	paciente := Paciente{
-		Nome:               r.FormValue("nome"),
-		CPF:                r.FormValue("cpf"),
-		DataNascimento:     r.FormValue("data_nascimento"),
-		Sexo:               r.FormValue("sexo"),
-		Telefone:           r.FormValue("telefone"),
-		Email:              r.FormValue("email"),
-		NomeMae:            r.FormValue("nome_mae"),
-		CEP:                r.FormValue("cep"),
-		Estado:             r.FormValue("estado"),
-		Cidade:             r.FormValue("cidade"),
-		Endereco:           r.FormValue("endereco"),
-		HomemMaiorQuarenta: homemMaiorQuarenta,
-		Etilista:           etilista,
-		LesaoSuspeita:      lesaoSuspeita,
-		Tabagista:          tabagista,
-		DataCadastro:       r.FormValue("data_cadastro"),
-		Microarea:          r.FormValue("microarea"),
 	}
 
 	sqlStatement := `
@@ -215,10 +190,11 @@ func CadastrarPacientes(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Redirect(w, r, "/listar-pacientes", http.StatusSeeOther)
+	w.WriteHeader(http.StatusCreated)
 }
 
 func ListarPacientes(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w)
 	rows, err := db.Query("SELECT nomepaciente, cpf, nascimento, sexo, telefone, email, nomemae, cep, estado, cidade, endereco, \"40anos\", etilista, lesao, tabagista, cadastro, microarea FROM pacientes")
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Erro ao buscar pacientes: %v", err), http.StatusInternalServerError)
@@ -242,41 +218,24 @@ func ListarPacientes(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = tpl.ExecuteTemplate(w, "listarpacientes.html", pacientes)
-	if err != nil {
-		http.Error(w, fmt.Sprintf("Erro ao renderizar template: %v", err), http.StatusInternalServerError)
-		return
-	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(pacientes)
 }
 
 func AtualizarPaciente(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w)
 	if r.Method != http.MethodPut {
 		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
 		return
 	}
 
-	err := r.ParseForm()
+	var paciente Paciente
+	err := json.NewDecoder(r.Body).Decode(&paciente)
 	if err != nil {
-		http.Error(w, "Erro ao processar o formulário", http.StatusBadRequest)
+		http.Error(w, "Erro ao processar o JSON", http.StatusBadRequest)
 		return
 	}
 
-	// Extrair os campos do formulário
-	nome := r.FormValue("nome")
-	cpf := r.FormValue("cpf")
-	dataNascimento := r.FormValue("data_nascimento")
-	sexo := r.FormValue("sexo")
-	telefone := r.FormValue("telefone")
-	cep := r.FormValue("cep")
-	microarea := r.FormValue("microarea")
-	estado := r.FormValue("estado")
-	cidade := r.FormValue("cidade")
-	endereco := r.FormValue("endereco")
-	email := r.FormValue("email")
-	nomeMae := r.FormValue("nome_mae")
-	dataCadastro := r.FormValue("data_cadastro")
-
-	// Montar o comando SQL para atualização
 	sqlStatement := `
 		UPDATE pacientes 
 		SET nome = $1, data_nascimento = $2, sexo = $3, telefone = $4,
@@ -284,53 +243,58 @@ func AtualizarPaciente(w http.ResponseWriter, r *http.Request) {
 			email = $10, nome_mae = $11, data_cadastro = $12
 		WHERE cpf = $13`
 
-	// Executar o comando SQL no banco de dados
-	_, err = db.Exec(sqlStatement, nome, dataNascimento, sexo, telefone, cep, microarea,
-		estado, cidade, endereco, email, nomeMae, dataCadastro, cpf)
+	_, err = db.Exec(sqlStatement, paciente.Nome, paciente.DataNascimento, paciente.Sexo, paciente.Telefone, paciente.CEP, paciente.Microarea,
+		paciente.Estado, paciente.Cidade, paciente.Endereco, paciente.Email, paciente.NomeMae, paciente.DataCadastro, paciente.CPF)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Erro ao atualizar dados no banco de dados: %v", err), http.StatusInternalServerError)
 		return
 	}
 
-	http.Redirect(w, r, "/listar-pacientes", http.StatusSeeOther)
+	w.WriteHeader(http.StatusOK)
+}
+func ListarNomesEDatasPacientes(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w)
+
+	rows, err := db.Query("SELECT nomepaciente, nascimento FROM pacientes")
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Erro ao buscar nomes e datas dos pacientes: %v", err), http.StatusInternalServerError)
+		return
+	}
+	defer rows.Close()
+
+	type Paciente struct {
+		Nome           string `json:"nome"`
+		DataNascimento string `json:"data_nascimento"`
+	}
+
+	var pacientes []Paciente
+	for rows.Next() {
+		var paciente Paciente
+		err := rows.Scan(&paciente.Nome, &paciente.DataNascimento)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Erro ao ler dados do paciente: %v", err), http.StatusInternalServerError)
+			return
+		}
+		pacientes = append(pacientes, paciente)
+	}
+
+	if err := rows.Err(); err != nil {
+		http.Error(w, fmt.Sprintf("Erro nos resultados do banco de dados: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(pacientes)
 }
 
 func main() {
-	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-
-	http.HandleFunc("/criar-usuario", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == http.MethodGet {
-			http.ServeFile(w, r, "cadastro.html")
-		} else if r.Method == http.MethodPost {
-			CriarUsuario(w, r)
-		} else {
-			http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
-		}
-	})
-
+	http.HandleFunc("/criar-usuario", CriarUsuario)
 	http.HandleFunc("/listar-usuarios", ListarUsuarios)
 	http.HandleFunc("/login", Login)
-
-	http.HandleFunc("/cadastrar-paciente", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == http.MethodGet {
-			http.ServeFile(w, r, "cadastropaciente.html")
-		} else if r.Method == http.MethodPost {
-			CadastrarPacientes(w, r)
-		} else {
-			http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
-		}
-	})
-	// Configuração do servidor HTTP
-	http.HandleFunc("/atualizar-paciente", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == http.MethodPut {
-			AtualizarPaciente(w, r)
-		} else {
-			http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
-		}
-	})
-
-
+	http.HandleFunc("/cadastrar-paciente", CadastrarPacientes)
 	http.HandleFunc("/listar-pacientes", ListarPacientes)
+	http.HandleFunc("/atualizar-paciente", AtualizarPaciente)
+	http.HandleFunc("/listar-nomes-datas-pacientes", ListarNomesEDatasPacientes)
 
 	fmt.Println("Servidor iniciado na porta 8080")
 	http.ListenAndServe(":8080", nil)

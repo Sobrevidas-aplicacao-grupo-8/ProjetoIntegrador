@@ -9,7 +9,7 @@ const PacientesCadastrados = () => {
   const [filtro, setFiltro] = useState("");
   const [pacientes, setPacientes] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:8080/pacientes")
+    fetch("http://localhost:8080/listar-nomes-data-pacientes")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Erro ao buscar pacientes");
@@ -43,7 +43,7 @@ const PacientesCadastrados = () => {
         <PacienteCadastrado
           key={index}
           nome={paciente.nome}
-          dataCadastro={new Date(paciente.data_cadastro).toLocaleDateString()}
+          dataCadastro={new Date(paciente.data_nascimento).toLocaleDateString()}
         />
       ))}
     </div>
