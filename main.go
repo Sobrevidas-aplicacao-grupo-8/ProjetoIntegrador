@@ -254,15 +254,18 @@ func AtualizarPaciente(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 func ListarNomesEDatasPacientes(w http.ResponseWriter, r *http.Request) {
+	// Habilita CORS (Cross-Origin Resource Sharing)
 	enableCORS(w)
 
-	rows, err := db.Query("SELECT nomepaciente, nascimento FROM pacientes")
+	// Consulta SQL para buscar nome e data de nascimento dos pacientes
+	rows, err := db.Query("SELECT nomepaciente, data_nascimento FROM pacientes")
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Erro ao buscar nomes e datas dos pacientes: %v", err), http.StatusInternalServerError)
 		return
 	}
 	defer rows.Close()
 
+	// Estrutura para armazenar os dados dos pacientes
 	type Paciente struct {
 		Nome           string `json:"nome"`
 		DataNascimento string `json:"data_nascimento"`
@@ -284,6 +287,7 @@ func ListarNomesEDatasPacientes(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Configuração do cabeçalho para responder com JSON
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(pacientes)
 }
