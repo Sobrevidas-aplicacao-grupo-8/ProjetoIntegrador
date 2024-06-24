@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	_ "github.com/lib/pq"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 const (
@@ -69,7 +70,7 @@ type Paciente struct {
 
 func enableCORS(w http.ResponseWriter) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 }
 
@@ -288,6 +289,11 @@ func ListarNomesEDatasPacientes(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	var err error
+	db, err = sql.Open("sqlite3", "./foo.db")
+	if err != nil {
+		panic(err)
+	}
 	http.HandleFunc("/criar-usuario", CriarUsuario)
 	http.HandleFunc("/listar-usuarios", ListarUsuarios)
 	http.HandleFunc("/login", Login)
