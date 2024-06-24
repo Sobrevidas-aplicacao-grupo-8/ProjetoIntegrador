@@ -329,7 +329,6 @@ func main() {
 		}
 	})
 
-
 	http.HandleFunc("/listar-pacientes", ListarPacientes)
 
 	fmt.Println("Servidor iniciado na porta 8080")
