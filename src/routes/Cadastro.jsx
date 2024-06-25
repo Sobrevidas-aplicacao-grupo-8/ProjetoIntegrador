@@ -6,23 +6,41 @@ const Cadastro = () => {
   const navigate = useNavigate();
 
   const handleCpfChange = (event) => {
-    let cpf = event.target.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+    let cpf = event.target.value.replace(/\D/g, ""); // Remove todos os caracteres não numéricos
     if (cpf.length > 3 && cpf.length <= 6) {
-        cpf = cpf.substring(0, 3) + '.' + cpf.substring(3);
+      cpf = cpf.substring(0, 3) + "." + cpf.substring(3);
     } else if (cpf.length > 6 && cpf.length <= 9) {
-        cpf = cpf.substring(0, 3) + '.' + cpf.substring(3, 6) + '.' + cpf.substring(6);
+      cpf =
+        cpf.substring(0, 3) +
+        "." +
+        cpf.substring(3, 6) +
+        "." +
+        cpf.substring(6);
     } else if (cpf.length > 9) {
-        cpf = cpf.substring(0, 3) + '.' + cpf.substring(3, 6) + '.' + cpf.substring(6, 9) + '-' + cpf.substring(9);
+      cpf =
+        cpf.substring(0, 3) +
+        "." +
+        cpf.substring(3, 6) +
+        "." +
+        cpf.substring(6, 9) +
+        "-" +
+        cpf.substring(9);
     }
     event.target.value = cpf;
   };
 
   const handleTelefoneChange = (event) => {
-    let telefone = event.target.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+    let telefone = event.target.value.replace(/\D/g, ""); // Remove todos os caracteres não numéricos
     if (telefone.length > 2 && telefone.length <= 7) {
-        telefone = '(' + telefone.substring(0, 2) + ') ' + telefone.substring(2);
+      telefone = "(" + telefone.substring(0, 2) + ") " + telefone.substring(2);
     } else if (telefone.length > 7) {
-        telefone = '(' + telefone.substring(0, 2) + ') ' + telefone.substring(2, 7) + '-' + telefone.substring(7);
+      telefone =
+        "(" +
+        telefone.substring(0, 2) +
+        ") " +
+        telefone.substring(2, 7) +
+        "-" +
+        telefone.substring(7);
     }
     event.target.value = telefone;
   };
@@ -81,7 +99,7 @@ const Cadastro = () => {
       </div>
 
       <div className="button-container">
-        <button className="button-text" onClick={() => navigate("/")}>
+        <button className="button-text" onClick={() => navigate("/login")}>
           Concluir
         </button>
       </div>

@@ -30,7 +30,9 @@ const PacientesEncaminhados = () => {
   return (
     <div className="color2" style={{ overflowX: "hidden" }}>
       <Header />
-      <div className="v196_132">voltar</div>
+      <div className="v196_132" onClick={() => navigate("/")}>
+        voltar
+      </div>
       <div className="v196_167">Pacientes encaminhados</div>
       <div className="input-container2" style={{ marginTop: 80 }}>
         <input

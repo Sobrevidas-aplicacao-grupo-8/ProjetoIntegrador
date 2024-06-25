@@ -4,7 +4,9 @@ import Header from "../components/Header";
 import home from "../assets/home.jpg";
 import usuario from "../assets/Usuário.png";
 import logout from "../assets/logout.jpg";
+import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
+  const navigate = useNavigate();
   return (
     <>
       <Header />
@@ -25,19 +27,27 @@ const Dashboard = () => {
             {/* <img src="img/Usuário.png" alt="Tela de cadastro de novo paciente" /> */}
           </div>
           <div className="paciente">
-            <a href="#">Adicionar paciente</a>
+            <a href="#" onClick={() => navigate("/paciente")}>
+              Adicionar paciente
+            </a>
           </div>
           <div className="monitorar">
             <h2>Monitoramento</h2>
             <ul>
               <li>
-                <a href="#">Pacientes encaminhados</a>
+                <a href="#" onClick={() => navigate("/pacienteencaminhado")}>
+                  Pacientes encaminhados
+                </a>
               </li>
               <li>
-                <a href="#">Pacientes absenteístas</a>
+                <a href="#" onClick={() => navigate("/pacientesabsenteistas")}>
+                  Pacientes absenteístas
+                </a>
               </li>
               <li>
-                <a href="#">Pacientes cadastrados</a>
+                <a href="#" onClick={() => navigate("/pacientescadastrados")}>
+                  Pacientes cadastrados
+                </a>
               </li>
             </ul>
           </div>

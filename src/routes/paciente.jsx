@@ -40,10 +40,14 @@ const Paciente = () => {
       >
         Pacientes absenteístas
       </span>
-      <span className="v18_32">SOBREVIDAS ACS</span>
+      <span className="v18_32" onClick={() => navigate("/")}>
+        SOBREVIDAS ACS
+      </span>
       <div className="v18_33"></div>
       <span className="v18_37">PROFISSIONAL DE SAÚDE</span>
-      <span className="v18_35">Joãozinho</span>
+      <span className="v18_35" onClick={() => navigate("/login")}>
+        Joãozinho
+      </span>
       <div className="v18_38"></div>
       <span className="v18_39">VERSÃO DEMO</span>
       <span className="v25_23">Paciente</span>
