@@ -299,6 +299,38 @@ func ListarNomesEDatasPacientes(w http.ResponseWriter, r *http.Request) {
 
 	log.Printf("Dados retornados com sucesso: %v", pacientes)
 }
+func ListarPacientesEncaminhados(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w)
+
+	rows, err := db.Query("SELECT nomepaciente FROM pacientes WHERE encaminhado = true")
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Erro ao buscar pacientes encaminhados: %v", err), http.StatusInternalServerError)
+		return
+	}
+	defer rows.Close()
+	type PacienteEncaminhado struct {
+		Nome string `json:"nome"`
+	}
+	var pacientes []PacienteEncaminhado // Assumindo que você tenha uma struct Paciente definida
+
+	for rows.Next() {
+		var paciente PacienteEncaminhado // Estrutura para armazenar dados do paciente
+		err := rows.Scan(&paciente.Nome) // Nome como uma propriedade da struct Paciente
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Erro ao ler nome do paciente: %v", err), http.StatusInternalServerError)
+			return
+		}
+		pacientes = append(pacientes, paciente)
+	}
+
+	if err := rows.Err(); err != nil {
+		http.Error(w, fmt.Sprintf("Erro nos resultados do banco de dados: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(pacientes)
+}
 
 func main() {
 	http.HandleFunc("/criar-usuario", CriarUsuario)
@@ -308,6 +340,7 @@ func main() {
 	http.HandleFunc("/listar-pacientes", ListarPacientes)
 	http.HandleFunc("/atualizar-paciente", AtualizarPaciente)
 	http.HandleFunc("/listar-nomes-datas-pacientes", ListarNomesEDatasPacientes)
+	http.HandleFunc("/listar-pacientes-encaminhados", ListarPacientesEncaminhados)
 
 	fmt.Println("Servidor iniciado na porta 8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))

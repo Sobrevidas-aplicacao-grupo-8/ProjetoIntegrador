@@ -3,21 +3,21 @@ import { useNavigate } from "react-router-dom";
 import "./Style/pacienteencaminhado.css";
 import Pacientes from "../components/Pacientes";
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const PacientesEncaminhados = () => {
   const navigate = useNavigate();
   const [filtro, setFiltro] = useState("");
   const [pacientes, setPacientes] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:8080/pacientes")
+    axios
+      .get("http://localhost:8080/listar-pacientes-encaminhados")
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Erro ao buscar pacientes");
-        }
-        return response.json();
+        setPacientes(response.data);
       })
-      .then((data) => setPacientes(data))
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error("Erro ao buscar pacientes:", error);
+      });
   }, []);
 
   const handleChange = (event) => {
@@ -42,11 +42,7 @@ const PacientesEncaminhados = () => {
       </div>
 
       {pacientesFiltrados.map((paciente, index) => (
-        <Pacientes
-          key={index}
-          nome={paciente.nome}
-          dataCadastro={new Date(paciente.data_cadastro).toLocaleDateString()}
-        />
+        <Pacientes key={index} nome={paciente.nome} />
       ))}
     </div>
   );
