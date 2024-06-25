@@ -8,7 +8,6 @@ import (
 	"net/http"
 
 	_ "github.com/lib/pq"
-	_ "github.com/mattn/go-sqlite3"
 )
 
 const (
@@ -239,9 +238,9 @@ func AtualizarPaciente(w http.ResponseWriter, r *http.Request) {
 
 	sqlStatement := `
 		UPDATE pacientes 
-		SET nome = $1, data_nascimento = $2, sexo = $3, telefone = $4,
+		SET nomepaciente = $1, nascimento = $2, sexo = $3, telefone = $4,
 			cep = $5, microarea = $6, estado = $7, cidade = $8, endereco = $9,
-			email = $10, nome_mae = $11, data_cadastro = $12
+			email = $10, nomemae = $11, cadastro = $12
 		WHERE cpf = $13`
 
 	_, err = db.Exec(sqlStatement, paciente.Nome, paciente.DataNascimento, paciente.Sexo, paciente.Telefone, paciente.CEP, paciente.Microarea,
@@ -253,29 +252,31 @@ func AtualizarPaciente(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 }
+
 func ListarNomesEDatasPacientes(w http.ResponseWriter, r *http.Request) {
-	// Habilita CORS (Cross-Origin Resource Sharing)
 	enableCORS(w)
 
-	// Consulta SQL para buscar nome e data de nascimento dos pacientes
-	rows, err := db.Query("SELECT nomepaciente, data_nascimento FROM pacientes")
+	log.Println("Iniciando ListarNomesEDatasPacientes")
+
+	rows, err := db.Query("SELECT nomepaciente, nascimento FROM pacientes")
 	if err != nil {
+		log.Printf("Erro ao executar consulta SQL: %v", err)
 		http.Error(w, fmt.Sprintf("Erro ao buscar nomes e datas dos pacientes: %v", err), http.StatusInternalServerError)
 		return
 	}
 	defer rows.Close()
 
-	// Estrutura para armazenar os dados dos pacientes
-	type Paciente struct {
+	type NomeDataPaciente struct {
 		Nome           string `json:"nome"`
 		DataNascimento string `json:"data_nascimento"`
 	}
 
-	var pacientes []Paciente
+	var pacientes []NomeDataPaciente
 	for rows.Next() {
-		var paciente Paciente
+		var paciente NomeDataPaciente
 		err := rows.Scan(&paciente.Nome, &paciente.DataNascimento)
 		if err != nil {
+			log.Printf("Erro ao ler dados do paciente: %v", err)
 			http.Error(w, fmt.Sprintf("Erro ao ler dados do paciente: %v", err), http.StatusInternalServerError)
 			return
 		}
@@ -283,21 +284,23 @@ func ListarNomesEDatasPacientes(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := rows.Err(); err != nil {
+		log.Printf("Erro nos resultados do banco de dados: %v", err)
 		http.Error(w, fmt.Sprintf("Erro nos resultados do banco de dados: %v", err), http.StatusInternalServerError)
 		return
 	}
 
-	// Configuração do cabeçalho para responder com JSON
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(pacientes)
+	err = json.NewEncoder(w).Encode(pacientes)
+	if err != nil {
+		log.Printf("Erro ao codificar resposta JSON: %v", err)
+		http.Error(w, fmt.Sprintf("Erro ao codificar resposta JSON: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Printf("Dados retornados com sucesso: %v", pacientes)
 }
 
 func main() {
-	var err error
-	db, err = sql.Open("sqlite3", "./foo.db")
-	if err != nil {
-		panic(err)
-	}
 	http.HandleFunc("/criar-usuario", CriarUsuario)
 	http.HandleFunc("/listar-usuarios", ListarUsuarios)
 	http.HandleFunc("/login", Login)
@@ -307,5 +310,5 @@ func main() {
 	http.HandleFunc("/listar-nomes-datas-pacientes", ListarNomesEDatasPacientes)
 
 	fmt.Println("Servidor iniciado na porta 8080")
-	http.ListenAndServe(":8080", nil)
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
