@@ -295,6 +295,22 @@ func AtualizarPaciente(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/listar-pacientes", http.StatusSeeOther)
 }
 
+func ContarPacientes() (int, error) {
+	var count int
+	err := db.QueryRow("SELECT COUNT(*) FROM pacientes").Scan(&count)
+	return count, err
+}
+
+func ContarPacientesHandler(w http.ResponseWriter, r *http.Request) {
+	count, err := ContarPacientes()
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Erro ao contar pacientes: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Fprintf(w, "Número de pacientes cadastrados: %d", count)
+}
+
 func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
@@ -330,6 +346,7 @@ func main() {
 	})
 
 	http.HandleFunc("/listar-pacientes", ListarPacientes)
+	http.HandleFunc("/contar-pacientes", ContarPacientesHandler)
 
 	fmt.Println("Servidor iniciado na porta 8080")
 	http.ListenAndServe(":8080", nil)
