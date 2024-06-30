@@ -329,6 +329,24 @@ func ContarPacientesEtilistasHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Número de pacientes etilistas: %d", count)
 }
 
+// Nova função para contar pacientes tabagistas
+func ContarPacientesTabagistas() (int, error) {
+	var count int
+	err := db.QueryRow("SELECT COUNT(*) FROM pacientes WHERE tabagista = true").Scan(&count)
+	return count, err
+}
+
+// Manipulador HTTP para contar pacientes tabagistas
+func ContarPacientesTabagistasHandler(w http.ResponseWriter, r *http.Request) {
+	count, err := ContarPacientesTabagistas()
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Erro ao contar pacientes tabagistas: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Fprintf(w, "Número de pacientes tabagistas: %d", count)
+}
+
 func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
@@ -366,6 +384,7 @@ func main() {
 	http.HandleFunc("/listar-pacientes", ListarPacientes)
 	http.HandleFunc("/contar-pacientes", ContarPacientesHandler)
 	http.HandleFunc("/contar-pacientes-etilistas", ContarPacientesEtilistasHandler)
+	http.HandleFunc("/contar-pacientes-tabagistas", ContarPacientesTabagistasHandler)
 
 	fmt.Println("Servidor iniciado na porta 8080")
 	http.ListenAndServe(":8080", nil)
