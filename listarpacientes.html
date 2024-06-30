@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Pacientes</title>
+</head>
+<body>
+    <h1>Lista de Pacientes</h1>
+    <table border="1">
+        <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Data de Nascimento</th>
+            <th>Sexo</th>
+            <th>Telefone</th>
+            <th>Email</th>
+            <th>Nome da Mãe</th>
+            <th>CEP</th>
+            <th>Estado</th>
+            <th>Cidade</th>
+            <th>Endereço</th>
+            <th>Homem Maior de 40 Anos</th>
+            <th>Etilista</th>
+            <th>Lesão Suspeita</th>
+            <th>Tabagista</th>
+            <th>Data de Cadastro</th>
+            <th>Microárea</th>
+        </tr>
+        {{range .}}
+        <tr>
+            <td>{{.Nome}}</td>
+            <td>{{.CPF}}</td>
+            <td>{{.DataNascimento}}</td>
+            <td>{{.Sexo}}</td>
+            <td>{{.Telefone}}</td>
+            <td>{{.Email}}</td>
+            <td>{{.NomeMae}}</td>
+            <td>{{.CEP}}</td>
+            <td>{{.Estado}}</td>
+            <td>{{.Cidade}}</td>
+            <td>{{.Endereco}}</td>
+            <td>{{if .HomemMaiorQuarenta}}Sim{{else}}Não{{end}}</td>
+            <td>{{if .Etilista}}Sim{{else}}Não{{end}}</td>
+            <td>{{if .LesaoSuspeita}}Sim{{else}}Não{{end}}</td>
+            <td>{{if .Tabagista}}Sim{{else}}Não{{end}}</td>
+            <td>{{.DataCadastro}}</td>
+            <td>{{.Microarea}}</td>
+        </tr>
+        {{end}}
+    </table>
+</body>
+</html>

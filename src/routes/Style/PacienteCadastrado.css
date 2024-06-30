@@ -1,0 +1,35 @@
+
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #32F3FF;
+    border-bottom: 1px solid #e0e0e0;
+    width: 100vw; /* Use the full viewport width */
+    box-sizing: border-box; /* Include padding in the width calculation */
+     /* Ensure it sticks to the top and spans the full width */
+    top: 0;
+    left: 0;
+  }
+  .usuariodisplay{
+    background-color: #D2FCFF;
+    padding: 3px 30px;
+  }
+  .color2{
+    background-color: #5AD6DE;
+    min-height: 100vh; /* para garantir que cubra toda a altura da página */
+  margin: 0;
+  padding: 0;
+  }
+  .tabela{
+    background-color: #ffffff;
+    padding: 1px 20px;
+    margin: 10px 40px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+
+  }
