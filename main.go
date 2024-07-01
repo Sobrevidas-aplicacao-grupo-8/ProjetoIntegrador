@@ -370,7 +370,7 @@ func ContarPacientesLesao() (int, error) {
 }
 
 func ContarPacientesLesaoHandler(w http.ResponseWriter, r *http.Request) {
-	count, err := ContarPacientesMaiorQuarenta()
+	count, err := ContarPacientesLesao()
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Erro ao contar pacientes com lesão: %v", err), http.StatusInternalServerError)
 		return
