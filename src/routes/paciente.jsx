@@ -4,201 +4,135 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Paciente = () => {
-  const navigate = useNavigate();
-  const [isSelected, setIsSelected] = useState(false);
-  const [isSelected2, setIsSelected2] = useState(false);
-  const [isSelected3, setIsSelected3] = useState(false);
-  const [isSelected4, setIsSelected4] = useState(false);
-  const toggleSelected = () => {
-    setIsSelected(!isSelected);
-  };
-  const toggleSelected2 = () => {
-    setIsSelected2(!isSelected2);
-  };
-  const toggleSelected3 = () => {
-    setIsSelected3(!isSelected3);
-  };
-  const toggleSelected4 = () => {
-    setIsSelected4(!isSelected4);
-  };
-  return (
-    <div className="v18_2">
-      <div className="v18_3"></div>
-      <div className="v18_5"></div>
-      <span className="v18_27">CADASTROS</span>
-      <span className="v18_26">
-        <a href="dashboard.html">Dashboard</a>
-      </span>
-      <span className="v18_7">HOME</span>
-      <span className="v18_29">MONITORAMENTO</span>
-      <span className="v18_30" onClick={() => navigate("/pacienteencaminhado")}>
-        Pacientes encaminhados
-      </span>
-      <span
-        className="v18_31"
-        onClick={() => navigate("/pacientesabsenteistas")}
-      >
-        Pacientes absenteístas
-      </span>
-      <span className="v18_32">SOBREVIDAS ACS</span>
-      <div className="v18_33"></div>
-      <span className="v18_37">PROFISSIONAL DE SAÚDE</span>
-      <span className="v18_35">Joãozinho</span>
-      <div className="v18_38"></div>
-      <span className="v18_39">VERSÃO DEMO</span>
-      <span className="v25_23">Paciente</span>
-      <div className="v25_24"></div>
-      <span className="v25_25">Paciente</span>
-      <span className="v25_26">Nome do paciente *</span>
-      <div className="v25_27">
-        <input
-          type="text"
-          className="input-text"
-          placeholder="Digite o nome do paciente"
-        />
-      </div>
-      <span className="v25_28">CPF *</span>
-      <div className="v25_31">
-        <input
-          type="text"
-          className="input-text"
-          placeholder="Digite o CPF do paciente"
-        />
-      </div>
-      <span className="v25_33">Data de nascimento *</span>
-      <div className="v25_34">
-        <input type="date" className="input-text" placeholder="__/__/____" />
-      </div>
-      <div className="v83_9"></div>
-      <span className="v25_37">Sexo *</span>
-      <div className="v25_39">
-        <input type="radio" id="masculino" name="sexo" value="masculino" />
-        <label htmlFor="masculino">MASCULINO</label>
-      </div>
+  const [formData, setFormData] = useState({
+    nome: '',
+    cpf: '',
+    data_nascimento: '',
+    sexo: 'M',
+    telefone: '',
+    email: '',
+    nome_mae: '',
+    cep: '',
+    estado: '',
+    cidade: '',
+    endereco: '',
+    microarea: '',
+    homem_maior_quarenta: false,
+    etilista: false,
+    lesao_suspeita: false,
+    tabagista: false,
+    data_cadastro: ''
+});
 
-      <div className="v25_41">
-        <input type="radio" id="feminino" name="sexo" value="feminino" />
-        <label htmlFor="feminino">FEMININO</label>
-      </div>
-
-      <span className="v25_43">Telefone Celular *</span>
-      <div className="v25_44">
-        <input type="tel" className="input-text" placeholder="(xx)xxxxx-xxxx" />
-      </div>
-      <div className="v25_47"></div>
-      <div className="v234_2"></div>
-      <span className="v25_48">E-mail (opcional) </span>
-      <div className="v25_49">
-        <input
-          type="text"
-          className="input-text"
-          placeholder="Digite o email"
-        />
-      </div>
-      <span className="v25_50">Nome da mãe *</span>
-      <div className="v25_51">
-        <input
-          type="text"
-          className="input-text"
-          placeholder="Digite o nome da mãe do paciente"
-        />
-      </div>
-      <span className="v25_53">CEP *</span>
-      <div className="v25_54">
-        <input type="text" className="input-text" placeholder="Digite o CEP" />
-      </div>
-      <span className="v25_55">Estado</span>
-      <span className="v25_56">Cidade</span>
-      <div className="v25_57">
-        <input type="text" className="input-text" placeholder="UF" />
-      </div>
-      <div className="v25_58">
-        <input
-          type="text"
-          className="input-text"
-          placeholder="Digite a Cidade"
-        />
-      </div>
-      <span className="v25_59">Endereço *</span>
-      <div className="v25_60">
-        <input
-          type="text"
-          className="input-text"
-          placeholder="Digite o Endereço"
-        />
-      </div>
-      <span className="v25_61">Fator de risco *</span>
-      <div className="v25_62" tabIndex="0" onClick={toggleSelected}>
-        <input type="checkbox" />
-        <div
-          className="box-content"
-          style={{ backgroundColor: isSelected ? "lightblue" : "transparent" }}
-        ></div>
-      </div>
-      <span className="v25_70">Homem &gt; 40 anos</span>
-      <div className="v25_63" tabIndex="0" onClick={toggleSelected2}>
-        <input type="checkbox" />
-        <div
-          className="box-content"
-          style={{ backgroundColor: isSelected2 ? "lightblue" : "transparent" }}
-        ></div>
-      </div>
-      <div className="v25_64" tabIndex="0" onClick={toggleSelected3}>
-        <input type="checkbox" />
-        <div
-          className="box-content"
-          style={{ backgroundColor: isSelected3 ? "lightblue" : "transparent" }}
-        ></div>
-      </div>
-      <span className="v25_68">Etilista</span>
-      <div className="v25_65" tabIndex="0" onClick={toggleSelected4}>
-        <input type="checkbox" />
-        <div
-          className="box-content"
-          style={{ backgroundColor: isSelected4 ? "lightblue" : "transparent" }}
-        ></div>
-      </div>
-      <span className="v25_69">Lesão suspeita</span>
-      <span className="v25_67">Tabagista</span>
-      <span className="v83_10">Data de Cadastro</span>
-      <div className="v83_12">
-        <input type="date" className="input-text" placeholder="__/__/____" />
-      </div>
-      <span
-        className="v87_62"
-        onClick={() => navigate("/pacientescadastrados")}
-      >
-        Pacientes cadastrados
-      </span>
-      <div className="v99_2"></div>
-      <div className="v99_3"></div>
-      <div className="v99_4"></div>
-      <a href="dashboard.html">
-        <div className="v99_5"></div>
-        <div className="v99_8">Salvar</div>
-      </a>
-      <div className="v99_6"></div>
-      <div className="v99_8"></div>
-      <span className="v99_9">Cancelar</span>
-      <a href="dashboard.html">
-        <div className="v99_6"></div>
-        <div className="v99_9">Cancelar</div>
-      </a>
-      <div className="v99_10"></div>
-      <div className="v225_8">
-        <span className="v225_2">cadastrar imagem</span>
-        <div className="v225_5"></div>
-      </div>
-      <span className="v234_3">Microárea*</span>
-      <div className="v234_4">
-        <input
-          type="text"
-          className="input-text"
-          placeholder="Digite a Microárea"
-        />
-      </div>
-    </div>
-  );
+const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+        ...formData,
+        [name]: type === 'checkbox' ? checked : value
+    });
 };
+
+const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch('/cadastrar-paciente', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle response data
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+};
+
+return (
+    <div className="formulario">
+        <h1>Paciente</h1>
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" placeholder="Nome do paciente" required value={formData.nome} onChange={handleChange} className="grande" /><br /><br />
+
+            <label htmlFor="cpf">CPF:</label>
+            <input type="text" id="cpf" name="cpf" placeholder="xxx.xxx.xxx-xx" required value={formData.cpf} onChange={handleChange} className="media" />
+
+            <label htmlFor="data_nascimento">Data de Nascimento:</label>
+            <input type="date" id="data_nascimento" name="data_nascimento" required value={formData.data_nascimento} onChange={handleChange} className="media" /><br /><br />
+
+            <label htmlFor="sexo">Sexo:</label>
+            <select id="sexo" name="sexo" required value={formData.sexo} onChange={handleChange} className="media">
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
+            </select>
+
+            <label htmlFor="telefone">Telefone:</label>
+            <input type="tel" id="telefone" name="telefone" placeholder="(xx) xxxxx-xxxx" required value={formData.telefone} onChange={handleChange} className="media" /><br /><br />
+
+            <label htmlFor="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Email do paciente" required value={formData.email} onChange={handleChange} className="grande" /><br /><br />
+
+            <label htmlFor="nome_mae">Nome da Mãe:</label>
+            <input type="text" id="nome_mae" name="nome_mae" placeholder="Nome da mãe do paciente" required value={formData.nome_mae} onChange={handleChange} className="grande" /><br /><br />
+
+            <label htmlFor="endereco">Endereço:</label>
+            <input type="text" id="endereco" name="endereco" placeholder="Endereço do paciente" value={formData.endereco} onChange={handleChange} className="grande" /><br /><br />
+
+            <label htmlFor="microarea">Microárea:</label>
+            <input type="text" id="microarea" name="microarea" placeholder="Microárea do paciente" value={formData.microarea} onChange={handleChange} className="media" />
+
+            <label htmlFor="cep">CEP:</label>
+            <input type="text" id="cep" name="cep" placeholder="cep do paciente" required value={formData.cep} onChange={handleChange} className="media" /><br /><br />
+
+            <label htmlFor="estado">Estado:</label>
+            <input type="text" id="estado" name="estado" placeholder="UF" required value={formData.estado} onChange={handleChange} className="pequeno" />
+
+            <label htmlFor="cidade">Cidade:</label>
+            <input type="text" id="cidade" name="cidade" placeholder="Cidade do paciente" value={formData.cidade} onChange={handleChange} className="media" /><br /><br />
+
+            <p>Fatores de Risco:</p><br />
+
+            <label htmlFor="homem_maior_quarenta">Homem maior de 40 anos:</label>
+            <input type="checkbox" id="homem_maior_quarenta" name="homem_maior_quarenta" checked={formData.homem_maior_quarenta} onChange={handleChange} /><br /><br />
+
+            <label htmlFor="etilista">Etilista:</label>
+            <input type="checkbox" id="etilista" name="etilista" checked={formData.etilista} onChange={handleChange} /><br /><br />
+
+            <label htmlFor="lesao_suspeita">Lesão Suspeita:</label>
+            <input type="checkbox" id="lesao_suspeita" name="lesao_suspeita" checked={formData.lesao_suspeita} onChange={handleChange} /><br /><br />
+
+            <label htmlFor="tabagista">Tabagista:</label>
+            <input type="checkbox" id="tabagista" name="tabagista" checked={formData.tabagista} onChange={handleChange} /><br /><br />
+
+            <label htmlFor="data_cadastro">Data de Cadastro:</label>
+            <input type="date" id="data_cadastro" name="data_cadastro" required value={formData.data_cadastro} onChange={handleChange} className="media" /><br /><br />
+
+            <button type="submit" className="botao">SALVAR</button>
+            <button type="reset" className="botao2" onClick={() => setFormData({
+                nome: '',
+                cpf: '',
+                data_nascimento: '',
+                sexo: 'M',
+                telefone: '',
+                email: '',
+                nome_mae: '',
+                cep: '',
+                estado: '',
+                cidade: '',
+                endereco: '',
+                microarea: '',
+                homem_maior_quarenta: false,
+                etilista: false,
+                lesao_suspeita: false,
+                tabagista: false,
+                data_cadastro: ''
+            })}>CANCELAR</button>
+        </form>
+    </div>
+);
+}
 
 export default Paciente;
