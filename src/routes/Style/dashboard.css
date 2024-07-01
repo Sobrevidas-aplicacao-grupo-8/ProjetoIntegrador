@@ -16,7 +16,7 @@ body{
     min-width: 200px;
     height: 80vh;
     box-sizing: border-box;
-    overflow-y: auto;
+    overflow-y: hidden;
   }
   
   .versao {
