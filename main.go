@@ -67,14 +67,81 @@ type Paciente struct {
 	Encaminhado        bool   `json:"encaminhado"`
 }
 
-func enableCORS(w http.ResponseWriter) {
+func enableCORS(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+	if r.Method == http.MethodOptions {
+		w.WriteHeader(http.StatusNoContent)
+		return
+	}
 }
 
+func CriarUsuario(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w, r)
+	if r.Method != http.MethodPost {
+		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var usuario Usuario
+	err := json.NewDecoder(r.Body).Decode(&usuario)
+	if err != nil {
+		http.Error(w, "Erro ao processar o JSON", http.StatusBadRequest)
+		return
+	}
+
+	sqlStatement := `
+	INSERT INTO usuarios (email, password, cpf, telefone, username)
+	VALUES ($1, $2, $3, $4, $5)`
+
+	_, err = db.Exec(sqlStatement, usuario.Email, usuario.Password, usuario.CPF, usuario.Telefone, usuario.Username)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Erro ao inserir dados no banco de dados: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
+}
+
+func Login(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w, r)
+	if r.Method != http.MethodPost {
+		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var credentials struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
+	}
+
+	err := json.NewDecoder(r.Body).Decode(&credentials)
+	if err != nil {
+		http.Error(w, "Erro ao processar o JSON", http.StatusBadRequest)
+		return
+	}
+
+	var storedPassword string
+	err = db.QueryRow("SELECT password FROM usuarios WHERE email = $1", credentials.Email).Scan(&storedPassword)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			http.Error(w, "Email não encontrado", http.StatusUnauthorized)
+		} else {
+			http.Error(w, fmt.Sprintf("Erro ao buscar dados no banco de dados: %v", err), http.StatusInternalServerError)
+		}
+		return
+	}
+
+	if credentials.Password != storedPassword {
+		http.Error(w, "Senha incorreta", http.StatusUnauthorized)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+}
 func CadastrarPacientes(w http.ResponseWriter, r *http.Request) {
-	enableCORS(w)
+	enableCORS(w, r)
 	if r.Method != http.MethodPost {
 		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
 		return
@@ -87,14 +154,11 @@ func CadastrarPacientes(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Define o campo Encaminhado como true
-	paciente.Encaminhado = true
-
 	sqlStatement := `
-	INSERT INTO pacientes (nomepaciente, cpf, nascimento, sexo, telefone, email, nomemae, cep, estado, cidade, endereco, "40anos", etilista, lesao, tabagista, cadastro, microarea, encaminhado)
-	VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)`
+	INSERT INTO pacientes (nomepaciente, cpf, nascimento, sexo, telefone, email, nomemae, cep, estado, cidade, endereco, "40anos", etilista, lesao, tabagista, cadastro, microarea)
+	VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)`
 
-	_, err = db.Exec(sqlStatement, paciente.Nome, paciente.CPF, paciente.DataNascimento, paciente.Sexo, paciente.Telefone, paciente.Email, paciente.NomeMae, paciente.CEP, paciente.Estado, paciente.Cidade, paciente.Endereco, paciente.HomemMaiorQuarenta, paciente.Etilista, paciente.LesaoSuspeita, paciente.Tabagista, paciente.DataCadastro, paciente.Microarea, paciente.Encaminhado)
+	_, err = db.Exec(sqlStatement, paciente.Nome, paciente.CPF, paciente.DataNascimento, paciente.Sexo, paciente.Telefone, paciente.Email, paciente.NomeMae, paciente.CEP, paciente.Estado, paciente.Cidade, paciente.Endereco, paciente.HomemMaiorQuarenta, paciente.Etilista, paciente.LesaoSuspeita, paciente.Tabagista, paciente.DataCadastro, paciente.Microarea)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Erro ao inserir dados no banco de dados: %v", err), http.StatusInternalServerError)
 		return
@@ -103,10 +167,9 @@ func CadastrarPacientes(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(map[string]string{"message": "Paciente cadastrado com sucesso"})
 }
-func ListarNomesEDatasPacientes(w http.ResponseWriter, r *http.Request) {
-	enableCORS(w)
 
-	log.Println("Iniciando ListarNomesEDatasPacientes")
+func ListarNomesEDatasPacientes(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w, r)
 
 	rows, err := db.Query("SELECT nomepaciente, nascimento FROM pacientes")
 	if err != nil {
@@ -147,10 +210,10 @@ func ListarNomesEDatasPacientes(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Printf("Dados retornados com sucesso: %v", pacientes)
 }
+
 func ListarPacientesEncaminhados(w http.ResponseWriter, r *http.Request) {
-	enableCORS(w)
+	enableCORS(w, r)
 
 	rows, err := db.Query("SELECT nomepaciente FROM pacientes WHERE encaminhado = true")
 	if err != nil {
@@ -161,11 +224,11 @@ func ListarPacientesEncaminhados(w http.ResponseWriter, r *http.Request) {
 	type PacienteEncaminhado struct {
 		Nome string `json:"nome"`
 	}
-	var pacientes []PacienteEncaminhado // Assumindo que você tenha uma struct Paciente definida
+	var pacientes []PacienteEncaminhado
 
 	for rows.Next() {
-		var paciente PacienteEncaminhado // Estrutura para armazenar dados do paciente
-		err := rows.Scan(&paciente.Nome) // Nome como uma propriedade da struct Paciente
+		var paciente PacienteEncaminhado
+		err := rows.Scan(&paciente.Nome)
 		if err != nil {
 			http.Error(w, fmt.Sprintf("Erro ao ler nome do paciente: %v", err), http.StatusInternalServerError)
 			return
@@ -181,8 +244,9 @@ func ListarPacientesEncaminhados(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(pacientes)
 }
+
 func ListarPacientesAbsenteistas(w http.ResponseWriter, r *http.Request) {
-	enableCORS(w)
+	enableCORS(w, r)
 
 	rows, err := db.Query("SELECT nomepaciente FROM pacientes WHERE encaminhado = false")
 	if err != nil {
@@ -193,11 +257,11 @@ func ListarPacientesAbsenteistas(w http.ResponseWriter, r *http.Request) {
 	type PacienteAbsenteistas struct {
 		Nome string `json:"nome"`
 	}
-	var pacientes []PacienteAbsenteistas // Assumindo que você tenha uma struct Paciente definida
+	var pacientes []PacienteAbsenteistas
 
 	for rows.Next() {
-		var paciente PacienteAbsenteistas // Estrutura para armazenar dados do paciente
-		err := rows.Scan(&paciente.Nome)  // Nome como uma propriedade da struct Paciente
+		var paciente PacienteAbsenteistas
+		err := rows.Scan(&paciente.Nome)
 		if err != nil {
 			http.Error(w, fmt.Sprintf("Erro ao ler nome do paciente: %v", err), http.StatusInternalServerError)
 			return
@@ -215,11 +279,12 @@ func ListarPacientesAbsenteistas(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-
 	http.HandleFunc("/cadastrar-paciente", CadastrarPacientes)
 	http.HandleFunc("/listar-nomes-datas-pacientes", ListarNomesEDatasPacientes)
 	http.HandleFunc("/listar-pacientes-encaminhados", ListarPacientesEncaminhados)
 	http.HandleFunc("/listar-pacientes-absenteistas", ListarPacientesAbsenteistas)
+	http.HandleFunc("/criar-usuario", CriarUsuario)
+	http.HandleFunc("/login", Login)
 
 	fmt.Println("Servidor iniciado na porta 8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
