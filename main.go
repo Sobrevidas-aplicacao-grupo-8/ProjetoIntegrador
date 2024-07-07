@@ -68,7 +68,7 @@ type Paciente struct {
 }
 
 func enableCORS(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 	if r.Method == http.MethodOptions {
@@ -140,6 +140,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 }
+
 func CadastrarPacientes(w http.ResponseWriter, r *http.Request) {
 	enableCORS(w, r)
 	if r.Method != http.MethodPost {
@@ -209,7 +210,6 @@ func ListarNomesEDatasPacientes(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("Erro ao codificar resposta JSON: %v", err), http.StatusInternalServerError)
 		return
 	}
-
 }
 
 func ListarPacientesEncaminhados(w http.ResponseWriter, r *http.Request) {
@@ -278,19 +278,139 @@ func ListarPacientesAbsenteistas(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(pacientes)
 }
 
+// Nova função para contar todos os pacientes
+func ContarPacientes() (int, error) {
+	var count int
+	err := db.QueryRow("SELECT COUNT(*) FROM pacientes").Scan(&count)
+	return count, err
+}
+
+func ContarPacientesHandler(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w, r)
+	count, err := ContarPacientes()
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Erro ao contar pacientes: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Fprintf(w, "%d", count)
+}
+
+// Nova função para contar pacientes etilistas
+func ContarPacientesEtilistas() (int, error) {
+	var count int
+	err := db.QueryRow("SELECT COUNT(*) FROM pacientes WHERE etilista = true").Scan(&count)
+	return count, err
+}
+
+func ContarPacientesEtilistasHandler(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w, r)
+	count, err := ContarPacientesEtilistas()
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Erro ao contar pacientes etilistas: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Fprintf(w, "%d", count)
+}
+
+// Nova função para contar pacientes tabagistas
+func ContarPacientesTabagistas() (int, error) {
+	var count int
+	err := db.QueryRow("SELECT COUNT(*) FROM pacientes WHERE tabagista = true").Scan(&count)
+	return count, err
+}
+
+func ContarPacientesTabagistasHandler(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w, r)
+	count, err := ContarPacientesTabagistas()
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Erro ao contar pacientes tabagistas: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Fprintf(w, "%d", count)
+}
+
+func ContarPacientesMaiorQuarenta() (int, error) {
+	var count int
+	err := db.QueryRow("SELECT COUNT(*) FROM pacientes WHERE \"40anos\" = true").Scan(&count)
+	return count, err
+}
+
+func ContarPacientesMaiorQuarentaHandler(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w, r)
+	count, err := ContarPacientesMaiorQuarenta()
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Erro ao contar pacientes com mais de 40 anos: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Fprintf(w, "%d", count)
+}
+
+func ContarPacientesLesao() (int, error) {
+	var count int
+	err := db.QueryRow("SELECT COUNT(*) FROM pacientes WHERE lesao = true").Scan(&count)
+	return count, err
+}
+
+func ContarPacientesLesaoHandler(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w, r)
+	count, err := ContarPacientesLesao()
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Erro ao contar pacientes com lesão: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Fprintf(w, "%d", count)
+}
+func ContarPacientesEncaminhados() (int, error) {
+	var count int
+	err := db.QueryRow("SELECT COUNT(*) FROM pacientes WHERE encaminhado = true").Scan(&count)
+	return count, err
+}
+
+func ContarPacientesEncaminhadosHandler(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w, r)
+	count, err := ContarPacientesEncaminhados()
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Erro ao contar pacientes encaminhados: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Fprintf(w, "%d", count)
+}
+func ContarPacientesNaoEncaminhados() (int, error) {
+	var count int
+	err := db.QueryRow("SELECT COUNT(*) FROM pacientes WHERE encaminhado = false").Scan(&count)
+	return count, err
+}
+
+func ContarPacientesNaoEncaminhadosHandler(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w, r)
+	count, err := ContarPacientesNaoEncaminhados()
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Erro ao contar pacientes não encaminhados: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Fprintf(w, "%d", count)
+}
 func main() {
-
-
-	
-	http.HandleFunc("/criar-usuario", CriarUsuario)
-	http.HandleFunc("/listar-usuarios", ListarUsuarios)
-	http.HandleFunc("/login", Login)
 	http.HandleFunc("/cadastrar-paciente", CadastrarPacientes)
 	http.HandleFunc("/listar-nomes-datas-pacientes", ListarNomesEDatasPacientes)
 	http.HandleFunc("/listar-pacientes-encaminhados", ListarPacientesEncaminhados)
 	http.HandleFunc("/listar-pacientes-absenteistas", ListarPacientesAbsenteistas)
 	http.HandleFunc("/criar-usuario", CriarUsuario)
 	http.HandleFunc("/login", Login)
+	http.HandleFunc("/contar-pacientes", ContarPacientesHandler)
+	http.HandleFunc("/contar-pacientes-etilistas", ContarPacientesEtilistasHandler)
+	http.HandleFunc("/contar-pacientes-tabagistas", ContarPacientesTabagistasHandler)
+	http.HandleFunc("/contar-pacientes-maior-quarenta", ContarPacientesMaiorQuarentaHandler)
+	http.HandleFunc("/contar-pacientes-lesao", ContarPacientesLesaoHandler)
+	http.HandleFunc("/contar-pacientes-encaminhados", ContarPacientesEncaminhadosHandler)
+	http.HandleFunc("/contar-pacientes-nao-encaminhados", ContarPacientesNaoEncaminhadosHandler)
 
 	fmt.Println("Servidor iniciado na porta 8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))

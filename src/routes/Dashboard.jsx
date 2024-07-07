@@ -1,12 +1,60 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./Style/dashboard.css";
 import mapagoiania from "../assets/mapagoiania.webp";
 import Header from "../components/Header";
-import home from "../assets/home.jpg";
-import usuario from "../assets/Usuário.png";
-import logout from "../assets/logout.jpg";
 import { useNavigate } from "react-router-dom";
+
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [pacientesCadastrados, setPacientesCadastrados] = useState(null);
+  const [pacientesEncaminhados, setPacientesEncaminhados] = useState(null);
+  const [pacientesAbsenteistas, setPacientesAbsenteistas] = useState(null);
+  const [homensMaiorQuarenta, setHomensMaiorQuarenta] = useState(null);
+  const [etilistas, setEtilistas] = useState(null);
+  const [tabagistas, setTabagistas] = useState(null);
+  const [lesoes, setLesoes] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const resCadastrados = await axios.get(
+          "http://localhost:8080/contar-pacientes"
+        );
+        const resEncaminhados = await axios.get(
+          "http://localhost:8080/contar-pacientes-encaminhados"
+        );
+        const resAbsenteistas = await axios.get(
+          "http://localhost:8080/contar-pacientes-nao-encaminhados"
+        );
+        const resMaiorQuarenta = await axios.get(
+          "http://localhost:8080/contar-pacientes-maior-quarenta"
+        );
+        const resEtilistas = await axios.get(
+          "http://localhost:8080/contar-pacientes-etilistas"
+        );
+        const resTabagistas = await axios.get(
+          "http://localhost:8080/contar-pacientes-tabagistas"
+        );
+        const resLesoes = await axios.get(
+          "http://localhost:8080/contar-pacientes-lesao"
+        );
+
+        setPacientesCadastrados(resCadastrados.data);
+        setPacientesEncaminhados(resEncaminhados.data);
+        setPacientesAbsenteistas(resAbsenteistas.data);
+        setHomensMaiorQuarenta(resMaiorQuarenta.data);
+        setEtilistas(resEtilistas.data);
+        setTabagistas(resTabagistas.data);
+        setLesoes(resLesoes.data);
+      } catch (error) {
+        console.error("Erro ao buscar dados:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
       <Header />
@@ -19,12 +67,10 @@ const Dashboard = () => {
             <h2>Home</h2>
           </div>
           <div className="dashboard">
-            {/* <img src="img/home.jpg" alt="Acessar home da página" />*/}
             <p>Dashboard</p>
           </div>
           <div className="cadastro">
             <h2>Cadastros</h2>
-            {/* <img src="img/Usuário.png" alt="Tela de cadastro de novo paciente" /> */}
           </div>
           <div className="paciente">
             <a href="#" onClick={() => navigate("/paciente")}>
@@ -72,40 +118,40 @@ const Dashboard = () => {
           </div>
           <div className="paciente-cadastrado">
             <p>Pacientes cadastrados </p>
+            <div className="qntd-cadastrado">{pacientesCadastrados}</div>
           </div>
           <div className="paciente-encaminhado">
             <p>Pacientes encaminhados</p>
+            <div className="qntd-encaminhado">{pacientesEncaminhados}</div>
           </div>
           <div className="paciente-absenteista">
             <p>Pacientes absenteístas</p>
-          </div><br />
-          <div className="qntd-cadastrado">Null</div>
-          <div className="qntd-encaminhado">Null</div>
-          <div className="qntd-absenteista">Null</div>
+            <div className="qntd-absenteista">{pacientesAbsenteistas}</div>
+          </div>
+          <br />
           <div className="mapa">
             <h2>Mapa dos pacientes cadastrados</h2>
             <img src={mapagoiania} alt="Mapa de Goiânia" className="logo2" />
           </div>
           <div className="fator-risco">
-            <h2>Pacientes por fator de risco</h2>
             <div className="row">
               <div className="idade">
                 <h4>Homem maior de 40 anos</h4>
-                <p>Null</p>
+                <p>{homensMaiorQuarenta}</p>
               </div>
               <div className="etilista">
                 <h4>Etilista</h4>
-                <p>Null</p>
+                <p>{etilistas}</p>
               </div>
             </div>
             <div className="row">
               <div className="fumante">
                 <h4>Tabagista</h4>
-                <p>Null</p>
+                <p>{tabagistas}</p>
               </div>
               <div className="lesao">
                 <h4>Lesão suspeita</h4>
-                <p>Null</p>
+                <p>{lesoes}</p>
               </div>
             </div>
           </div>

@@ -116,20 +116,20 @@ body{
   
 
   .paciente-cadastrado{
-    font-size: 25px;
+    font-size: 20px;
     text-align: left;
     display: inline-block;
-    margin-right: 120px;
+    margin-right: 20px;
   }
 
   .paciente-encaminhado{
-    font-size: 25px;
+    font-size: 20px;
     text-align: center;
     display: inline-block;
-    margin-right: 160px;
+    margin-right: 20px;
   }
   .paciente-absenteista{
-    font-size: 25px;
+    font-size: 20px;
     text-align: right;
     display: inline-block;
   }
