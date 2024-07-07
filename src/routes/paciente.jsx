@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import "./Style/paciente.css";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 
@@ -36,19 +36,19 @@ const Paciente = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("/cadastrar-paciente", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle response data
+    axios
+      .post("http://localhost:8080/cadastrar-paciente", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        alert(response.data.message);
+        navigate("/pacientescadastrados"); // Navegar para a página de pacientes cadastrados
       })
       .catch((error) => {
         console.error("Error:", error);
+        alert("Ocorreu um erro ao cadastrar o paciente");
       });
   };
 
@@ -64,12 +64,10 @@ const Paciente = () => {
             <h2>Home</h2>
           </div>
           <div className="dashboard">
-            {/* <img src="img/home.jpg" alt="Acessar home da página" />*/}
             <p>Dashboard</p>
           </div>
           <div className="cadastro">
             <h2>Cadastros</h2>
-            {/* <img src="img/Usuário.png" alt="Tela de cadastro de novo paciente" /> */}
           </div>
           <div className="paciente">
             <a href="#" onClick={() => navigate("/paciente")}>
