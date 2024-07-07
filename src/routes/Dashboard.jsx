@@ -71,16 +71,16 @@ const Dashboard = () => {
             </datalist>
           </div>
           <div className="paciente-cadastrado">
-            <p>Pacientes cadastrados</p>
+            <p>Pacientes cadastrados </p>
           </div>
-          <div className="qntd-cadastrado">Null</div>
           <div className="paciente-encaminhado">
             <p>Pacientes encaminhados</p>
           </div>
-          <div className="qntd-encaminhado">Null</div>
           <div className="paciente-absenteista">
             <p>Pacientes absenteístas</p>
-          </div>
+          </div><br />
+          <div className="qntd-cadastrado">Null</div>
+          <div className="qntd-encaminhado">Null</div>
           <div className="qntd-absenteista">Null</div>
           <div className="mapa">
             <h2>Mapa dos pacientes cadastrados</h2>
@@ -88,21 +88,25 @@ const Dashboard = () => {
           </div>
           <div className="fator-risco">
             <h2>Pacientes por fator de risco</h2>
-            <div className="idade">
-              <h4>Homem &gt; 40 anos</h4>
-              <p>Null</p>
+            <div className="row">
+              <div className="idade">
+                <h4>Homem maior de 40 anos</h4>
+                <p>Null</p>
+              </div>
+              <div className="etilista">
+                <h4>Etilista</h4>
+                <p>Null</p>
+              </div>
             </div>
-            <div className="elitista">
-              <h4>Elitista</h4>
-              <p>Null</p>
-            </div>
-            <div className="fumante">
-              <h4>Tabagista</h4>
-              <p>Null</p>
-            </div>
-            <div className="lesao">
-              <h4>Lesão suspeita</h4>
-              <p>Null</p>
+            <div className="row">
+              <div className="fumante">
+                <h4>Tabagista</h4>
+                <p>Null</p>
+              </div>
+              <div className="lesao">
+                <h4>Lesão suspeita</h4>
+                <p>Null</p>
+              </div>
             </div>
           </div>
         </div>

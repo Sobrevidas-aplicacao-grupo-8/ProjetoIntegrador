@@ -114,24 +114,51 @@ body{
     margin-bottom: 2rem;
   }
   
-  .paciente-cadastrado,
-  .paciente-encaminhado,
-  .paciente-absenteista {
+
+  .paciente-cadastrado{
+    font-size: 25px;
+    text-align: left;
+    display: inline-block;
+    margin-right: 120px;
+  }
+
+  .paciente-encaminhado{
     font-size: 25px;
     text-align: center;
+    display: inline-block;
+    margin-right: 160px;
+  }
+  .paciente-absenteista{
+    font-size: 25px;
+    text-align: right;
+    display: inline-block;
   }
   
   .qntd-cadastrado,
-  .qntd-encaminhado,
-  .qntd-absenteista {
+  .qntd-encaminhado
+   {
     font-size: 20px;
     text-align: center;
-    width: 100%;
+    width: 20%;
     background-color: #00e1ff;
     height: 150px;
-    display: flex;
+    display: inline-block;
     align-items: center;
     justify-content: center;
+    margin-right: 50px;
+    
+  }
+  .qntd-absenteista{
+    font-size: 20px;
+    text-align: center;
+    width: 20%;
+    background-color: #00e1ff;
+    height: 150px;
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    margin-left: 50px;
+
   }
   
   .mapa {
@@ -154,6 +181,8 @@ body{
   
   .fator-risco {
     width: 100%;
+    display: flex;
+    gap: 70px;
   }
   
   .fator-risco h2 {
@@ -179,4 +208,30 @@ body{
     align-items: center;
     justify-content: center;
     text-align: center;
+  }
+  .idade{
+    text-align: left;
+    margin-left: 40px;
+    width: 60%;
+  }
+
+  .etilista{
+
+    text-align: left;
+    width: 60%;
+    margin-left: 40px;
+    
+
+
+  }
+  .fumante{
+    margin-top: 50px;
+    width: 130%;
+    text-align: left;
+  }
+
+  .lesao{
+
+      width: 130%;
+      text-align: left;
   }

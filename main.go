@@ -365,6 +365,9 @@ func ListarPacientesAbsenteistas(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+
+
+	
 	http.HandleFunc("/criar-usuario", CriarUsuario)
 	http.HandleFunc("/listar-usuarios", ListarUsuarios)
 	http.HandleFunc("/login", Login)
