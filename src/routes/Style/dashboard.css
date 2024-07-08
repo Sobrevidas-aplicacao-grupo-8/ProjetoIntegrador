@@ -120,18 +120,36 @@ body{
     text-align: left;
     display: inline-block;
     margin-right: 20px;
+    position: absolute;
+    left:50px;
+    
   }
 
   .paciente-encaminhado{
     font-size: 20px;
     text-align: center;
     display: inline-block;
-    margin-right: 20px;
+    margin-right: 200px;
+   
+    
+  }
+  #encaminhado{
+    
+   display: flex;
+
+    
   }
   .paciente-absenteista{
     font-size: 20px;
     text-align: right;
     display: inline-block;
+    
+    
+    
+    
+  }
+  #absenteistas{
+    position: absolute;
   }
   
   .qntd-cadastrado,
@@ -141,23 +159,36 @@ body{
     text-align: center;
     width: 20%;
     background-color: #00e1ff;
-    height: 150px;
-    display: inline-block;
+    height: 50px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 50px;
+    margin-right: 300px;
     
   }
   .qntd-absenteista{
     font-size: 20px;
     text-align: center;
-    width: 20%;
+    width: 5%;
     background-color: #00e1ff;
-    height: 150px;
-    display: inline-block;
+    height: 50px;
+    display: flex;
+    position: absolute;
     align-items: center;
     justify-content: center;
-    margin-left: 50px;
+    margin-left: 20px;
+    left: 945px;
+    bottom: 630px;
+
+  }
+
+  .containernumeros{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+
+
 
   }
   

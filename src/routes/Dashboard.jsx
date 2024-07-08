@@ -116,17 +116,19 @@ const Dashboard = () => {
               <option value="Microrregião 7"></option>
             </datalist>
           </div>
-          <div className="paciente-cadastrado">
-            <p>Pacientes cadastrados </p>
-            <div className="qntd-cadastrado">{pacientesCadastrados}</div>
-          </div>
-          <div className="paciente-encaminhado">
-            <p>Pacientes encaminhados</p>
-            <div className="qntd-encaminhado">{pacientesEncaminhados}</div>
-          </div>
-          <div className="paciente-absenteista">
-            <p>Pacientes absenteístas</p>
-            <div className="qntd-absenteista">{pacientesAbsenteistas}</div>
+          <div className="containernumeros">
+            <div className="paciente-cadastrado">
+              <p>Pacientes cadastrados </p>
+              <div className="qntd-cadastrado">{pacientesCadastrados}</div>
+            </div>
+            <div className="paciente-encaminhado">
+              <p id="encaminhado">Pacientes encaminhados</p>
+              <div className="qntd-encaminhado">{pacientesEncaminhados}</div>
+            </div>
+            <div className="paciente-absenteista">
+              <p id="absenteistas">Pacientes absenteístas</p>
+              <div className="qntd-absenteista">{pacientesAbsenteistas}</div>
+            </div>
           </div>
           <br />
           <div className="mapa">
