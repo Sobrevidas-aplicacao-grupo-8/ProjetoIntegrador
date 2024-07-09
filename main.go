@@ -397,6 +397,22 @@ func ContarPacientesNaoEncaminhadosHandler(w http.ResponseWriter, r *http.Reques
 
 	fmt.Fprintf(w, "%d", count)
 }
+func ContarPacientesAbsenteistas() (int, error) {
+	var count int
+	err := db.QueryRow("SELECT COUNT(*) FROM pacientes WHERE encaminhado = false").Scan(&count)
+	return count, err
+}
+
+func ContarPacientesAbsenteistasHandler(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w, r)
+	count, err := ContarPacientesAbsenteistas()
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Erro ao contar pacientes absenteistas: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Fprintf(w, "%d", count)
+}
 func main() {
 	http.HandleFunc("/cadastrar-paciente", CadastrarPacientes)
 	http.HandleFunc("/listar-nomes-datas-pacientes", ListarNomesEDatasPacientes)
@@ -410,7 +426,7 @@ func main() {
 	http.HandleFunc("/contar-pacientes-maior-quarenta", ContarPacientesMaiorQuarentaHandler)
 	http.HandleFunc("/contar-pacientes-lesao", ContarPacientesLesaoHandler)
 	http.HandleFunc("/contar-pacientes-encaminhados", ContarPacientesEncaminhadosHandler)
-	http.HandleFunc("/contar-pacientes-nao-encaminhados", ContarPacientesNaoEncaminhadosHandler)
+	http.HandleFunc("/contar-pacientes-absenteistas", ContarPacientesAbsenteistasHandler)
 
 	fmt.Println("Servidor iniciado na porta 8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
