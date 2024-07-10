@@ -172,7 +172,7 @@ func CadastrarPacientes(w http.ResponseWriter, r *http.Request) {
 func ListarNomesEDatasPacientes(w http.ResponseWriter, r *http.Request) {
 	enableCORS(w, r)
 
-	rows, err := db.Query("SELECT nomepaciente, nascimento FROM pacientes")
+	rows, err := db.Query("SELECT nomepaciente, cadastro FROM pacientes")
 	if err != nil {
 		log.Printf("Erro ao executar consulta SQL: %v", err)
 		http.Error(w, fmt.Sprintf("Erro ao buscar nomes e datas dos pacientes: %v", err), http.StatusInternalServerError)
@@ -181,14 +181,14 @@ func ListarNomesEDatasPacientes(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 
 	type NomeDataPaciente struct {
-		Nome           string `json:"nome"`
-		DataNascimento string `json:"data_nascimento"`
+		Nome         string `json:"nome"`
+		DataCadastro string `json:"data_cadastro"`
 	}
 
 	var pacientes []NomeDataPaciente
 	for rows.Next() {
 		var paciente NomeDataPaciente
-		err := rows.Scan(&paciente.Nome, &paciente.DataNascimento)
+		err := rows.Scan(&paciente.Nome, &paciente.DataCadastro)
 		if err != nil {
 			log.Printf("Erro ao ler dados do paciente: %v", err)
 			http.Error(w, fmt.Sprintf("Erro ao ler dados do paciente: %v", err), http.StatusInternalServerError)
@@ -376,22 +376,6 @@ func ContarPacientesEncaminhadosHandler(w http.ResponseWriter, r *http.Request) 
 	count, err := ContarPacientesEncaminhados()
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Erro ao contar pacientes encaminhados: %v", err), http.StatusInternalServerError)
-		return
-	}
-
-	fmt.Fprintf(w, "%d", count)
-}
-func ContarPacientesNaoEncaminhados() (int, error) {
-	var count int
-	err := db.QueryRow("SELECT COUNT(*) FROM pacientes WHERE encaminhado = false").Scan(&count)
-	return count, err
-}
-
-func ContarPacientesNaoEncaminhadosHandler(w http.ResponseWriter, r *http.Request) {
-	enableCORS(w, r)
-	count, err := ContarPacientesNaoEncaminhados()
-	if err != nil {
-		http.Error(w, fmt.Sprintf("Erro ao contar pacientes não encaminhados: %v", err), http.StatusInternalServerError)
 		return
 	}
 

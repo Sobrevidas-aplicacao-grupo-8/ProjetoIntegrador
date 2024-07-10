@@ -45,7 +45,7 @@ const PacientesCadastrados = () => {
         <PacienteCadastrado
           key={index}
           nome={paciente.nome}
-          dataCadastro={new Date(paciente.data_nascimento).toLocaleDateString()}
+          dataCadastro={new Date(paciente.data_cadastro).toLocaleDateString()}
         />
       ))}
     </div>

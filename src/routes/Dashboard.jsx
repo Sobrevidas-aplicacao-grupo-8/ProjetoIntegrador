@@ -25,7 +25,7 @@ const Dashboard = () => {
           "http://localhost:8080/contar-pacientes-encaminhados"
         );
         const resAbsenteistas = await axios.get(
-          "http://localhost:8080/contar-pacientes-nao-encaminhados"
+          "http://localhost:8080/contar-pacientes-absenteistas"
         );
         const resMaiorQuarenta = await axios.get(
           "http://localhost:8080/contar-pacientes-maior-quarenta"
