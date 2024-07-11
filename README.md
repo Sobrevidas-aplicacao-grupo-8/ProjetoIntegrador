@@ -23,7 +23,6 @@ OralCancerWatch é uma aplicação projetada para auxiliar na detecção e monit
 
 2. Instale as dependências:
    ```sh
-   cd src
    npm install
    npm install axios
    ```
