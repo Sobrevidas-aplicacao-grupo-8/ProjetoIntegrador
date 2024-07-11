@@ -47,7 +47,6 @@ OralCancerWatch é uma aplicação projetada para auxiliar na detecção e monit
 Para iniciar o servidor de desenvolvimento:
 
 ```sh
-cd src
 npm run dev
 ```
 
