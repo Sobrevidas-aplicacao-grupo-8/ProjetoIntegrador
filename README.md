@@ -2,6 +2,8 @@
 
 ## Introdução
 
+Link pitch: https://drive.google.com/file/d/1Q-Bro-jTOJ9K5xKHtEXhDLgPQWmVx5N3/view?usp=sharing
+Link apresentação do software: https://drive.google.com/file/d/1sRxaSMjWRBrEL1RE-yCglbsDwggmMhOb/view?usp=sharing
 OralCancerWatch é uma aplicação projetada para auxiliar na detecção e monitoramento do câncer bucal. A aplicação fornece auxilio para os ACSs realizarem o cadastro e monitoramento do grupo de risco.
 
 ## Pré-requisitos
@@ -48,6 +50,14 @@ Para iniciar o servidor de desenvolvimento:
 
 ```sh
 npm run dev
+```
+
+### Back-end (go)
+
+Para iniciar o servidor de desenvolvimento:
+
+```sh
+go run main.go
 ```
 
 ## Estrutura do Projeto
