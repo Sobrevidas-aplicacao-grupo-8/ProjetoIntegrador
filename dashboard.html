@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/styles1.css">
+</head>
+<body>
+    <div class="tittle">
+        <h1>Sobrevidas acs</h1>
+        <div id="logout">
+            <a href="">Sair</a>
+        </div>
+        <div id="profissional">
+            <h3>Nome do profissional</h3>
+            <p>Profissional da saúde</p>
+        </div>
+    </div>
+    <div class="barra-lateral">
+        <div class="versao"><h3>Número da versão</h2></div>
+        <div class="home"><h2>Home</h2></div>
+        <div class="dashboard">
+            <!-- <img src="img/home.jpg" alt="Acessar home da página"> -->
+            <p>Dashboard</p>
+        </div>
+        <div class="cadastro">
+            <h2>Cadastros</h2>
+            <!-- <img src="img/Usuário.png" alt="Tela de cadastro de novo paciente"> -->
+        </div>
+        <div class="paciente">
+            <a href="">Adicionar paciente</a>
+        </div>
+        <div class="monitorar">
+            <h2>Monitoramento</h2>
+            <ul>
+                <li><a href="">Pacientes encaminhados</a></li>
+                <li><a href="">Pacientes absenteístas</a></li>
+                <li><a href="">Pacientes cadastrados</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="principal">
+        <div class="form">
+            <input type="text" list="flavors" name="flavor" placeholder="Selecione a Microrregião">
+            <datalist id="flavors">
+                <option value="Microrregião 1"></option>
+                <option value="Microrregião 2"></option>
+                <option value="Microrregião 3"></option>
+                <option value="Microrregião 4"></option>
+                <option value="Microrregião 5"></option>
+                <option value="Microrregião 6"></option>
+                <option value="Microrregião 7"></option>
+            </datalist>
+        </div>
+        <div class="paciente-cadastrado"><p>Pacientes cadastrados</p></div>
+        <div class="paciente-encaminhado"><p>Pacientes encaminhados</p></div>
+        <div class="paciente-absenteista"><p>Pacientes absenteístas</p></div>
+        <div class="qntd-cadastrado">Null</div>
+        <div class="qntd-encaminhado">Null</div>
+        <div class="qntd-absenteista">Null</div>
+        <div class="mapa">
+            <h2>Mapa dos pacientes cadastrados</h2>
+            <img src="img/mapagoiania.webp" alt="Mapa de Goiânia" class="logo">
+        </div>
+        <div class="fator-risco">
+            <h2>Pacientes por fator de risco</h2>
+            <div class="idade">
+                <h4>Homem > 40 anos</h4>
+                <p>Null</p>
+            </div>
+            <div class="elitista">
+                <h4>Elitista</h4>
+                <p>Null</p>
+            </div>
+            <div class="fumante">
+                <h4>Tabagista</h4>
+                <p>Null</p>
+            </div>
+            <div class="lesao">
+                <h4>Lesão suspeita</h4>
+                <p>Null</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

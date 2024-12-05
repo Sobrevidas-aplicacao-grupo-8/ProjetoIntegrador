@@ -1,0 +1,282 @@
+html {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(155, 255, 255);
+}
+
+.tittle {
+    background-color: aqua;
+    text-transform: uppercase;
+    padding: 30px;
+}
+
+#logout {
+    position: absolute;
+    right: 20px;
+    left: 128rem;
+    top: 50px;
+    font-size: 40px;
+}
+
+#logout a {
+    text-decoration: none;
+    color: black;
+}
+
+#profissional {
+    background-color: rgb(155, 255, 255);
+    position: absolute;
+    top: 25px;
+    /* left: 140rem; */
+    right: 4rem;
+    padding: 10px;
+    text-align: center;
+}
+
+.barra-lateral {
+    background-color: rgb(227, 255, 255);
+    position: absolute;
+    left: 0.5rem;
+    padding: 10px;
+    height: 850px;
+}
+
+.versao {
+    text-transform: uppercase;
+    background-color: rgb(73, 207, 207);
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+}
+
+.home {
+    text-transform: uppercase;
+    font-weight: bolder;
+}
+
+.dashboard {
+    font-size: 25px;
+    background-color: rgb(73, 207, 207);
+    text-align: center;
+    padding: 1px;
+}
+
+.cadastro {
+    text-transform: uppercase;
+    font-weight: bolder;
+}
+
+.paciente a{
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    font-size: 25px;
+    padding: 25px;
+    line-height: 80px
+}
+
+.paciente a:hover{
+    color: #112483;
+}
+
+.monitorar h2 {
+    text-transform: uppercase;
+    font-weight: bolder;
+}
+
+.monitorar ul {
+    font-size: 25px;
+    list-style-type: none;
+    padding: 10px 5px 10px 0px;
+}
+
+.monitorar li a{
+    text-decoration: none;
+    color: black;
+    padding:20px 0px;
+    height: 100px;
+    line-height: 100px;
+}
+
+.monitorar li a:hover{
+   color: #112483;
+}
+
+.principal {
+    position: absolute;
+    left: 325px;
+}
+
+.form :placeholder-shown {
+    font-size: 50px;
+    color: aqua;
+}
+
+.form {
+    position: absolute;
+    left: 4rem;
+    top: 2rem;
+}
+
+.paciente-cadastrado {
+    position: absolute;
+    left: 5rem;
+    top: 8rem;
+    font-size: 50px;
+    text-align: center;
+    width: 350px;
+}
+
+.paciente-encaminhado {
+    position: absolute;
+    left: 50rem;
+    top: 8rem;
+    font-size: 50px;
+    text-align: center;
+    width: 350px;
+}
+
+.paciente-absenteista {
+    position: absolute;
+    left: 100rem;
+    top: 8rem;
+    font-size: 50px;
+    text-align: center;
+    width: 350px;
+}
+
+.qntd-cadastrado {
+    position: absolute;
+    left: 6.5rem;
+    top: 24rem;
+    font-size: 50px;
+    text-align: center;
+    width: 300px;
+    background-color: #00e1ff;
+    height: 150px;
+    padding-top: 100px;
+}
+
+.qntd-encaminhado {
+    position: absolute;
+    left: 52rem;
+    top: 24rem;
+    font-size: 50px;
+    text-align: center;
+    width: 300px;
+    background-color: #00e1ff;
+    height: 150px;
+    padding-top: 100px;
+}
+
+.qntd-absenteista {
+    position: absolute;
+    left: 102rem;
+    top: 24rem;
+    font-size: 50px;
+    text-align: center;
+    width: 300px;
+    background-color: #00e1ff;
+    height: 150px;
+    padding-top: 100px;
+}
+
+.mapa {
+    position: absolute;
+    top: 45rem;
+}
+
+.mapa h2 {
+    position: absolute;
+    text-transform: uppercase;
+    font-size: 25px;
+    left: 6.5rem;
+    width: 1000px;
+}
+
+.logo {
+    position: absolute;
+    text-align: center;
+    left: 6rem;
+    top: 7rem;
+    width: 2000px;
+}
+
+.fator-risco {
+    position: absolute;
+    top: 2150px;
+    width: 2000px;
+}
+
+.fator-risco h2 {
+    text-align: center;
+    font-size: 50px;
+    font-style: normal;
+}
+
+.idade h4 {
+    font-size: 40px;
+    position: absolute;
+    left: 6rem;
+}
+
+.idade p {
+    font-size: 40px;
+    position: absolute;
+    left:7rem;
+    top: 16rem;
+    background-color: #00e1ff;
+    width: 300px;
+    height: 150px;
+    text-align: center;
+}
+
+.elitista h4 {
+    font-size: 40px;
+    position: absolute;
+    left: 40rem;
+}
+
+.elitista p {
+    font-size: 40px;
+    position: absolute;
+    left:35rem;
+    top: 16rem;
+    background-color: #00e1ff;
+    width: 300px;
+    height: 150px;
+    text-align: center;
+}
+
+.fumante h4 {
+    font-size: 40px;
+    position: absolute;
+    left: 70rem;
+}
+
+.fumante p {
+    font-size: 40px;
+    position: absolute;
+    left:66rem;
+    top: 16rem;
+    background-color: #00e1ff;
+    width: 300px;
+    height: 150px;
+    text-align: center;
+}
+
+.lesao h4 {
+    font-size: 40px;
+    position: absolute;
+    left: 100rem;
+}
+
+.lesao p {
+    font-size: 40px;
+    position: absolute;
+    left:100rem;
+    top: 16rem;
+    background-color: #00e1ff;
+    width: 300px;
+    height: 150px;
+    text-align: center;
+}
